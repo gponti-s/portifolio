@@ -7,7 +7,7 @@ function Card({cardTitle, cardSummary, cardButtonText}) {
         <p className="card-text">
           {cardSummary}
         </p>
-        <a href="#" className="btn btn-secondary">
+        <a href="" className="btn btn-secondary">
           {cardButtonText}
         </a>
       </div>
