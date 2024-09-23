@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --no-warnings --loader ts-node/esm app.ts",
-    "dev": "node --loader ts-node/esm --watch app.ts",
+    "start": "node --no-warnings --loader ts-node/esm src/app.ts",
+    "dev": "node --loader ts-node/esm --watch src/app.ts",
     "build": "tsc",
     "serve": "node dist/app.js"
   },
