@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
-import userController from "./controllers/userController";
-import { errorHandler } from "../utils/error/errorHandler";
+import userController from "./controllers/userController.js";
+//import { erroHandler } from "./utils/error/errorHandler.js";
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ app.use(rateLimit({
 }));
 
 // Routes
-//app.use("/api/user", userController);
+app.use("/api/user", userController);
 
 
 app.listen(port, () => {

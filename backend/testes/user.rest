@@ -1,0 +1,42 @@
+GET http://localhost:5000/api/user/
+
+###
+GET http://localhost:5000/api/user/66f407176432b3c398cd7b39
+
+###
+GET http://localhost:5000/api/user/email/john.doe@example.com
+
+###
+GET http://localhost:5000/api/user/username/johndoe
+
+###
+
+POST http://localhost:5000/api/user/create
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "username": "johndoe",
+    "email": "john.doe@example.com",
+    "gender": "male",
+    "country": "USA",
+    "birthDate": "1990-01-01",
+    "password": "password123"
+}
+
+###
+PUT http://localhost:5000/api/user/update/66f407176432b3c398cd7b39
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "username": "johndoe",
+    "email": "john.doe@example.com",
+    "gender": "male",
+    "country": "USA",
+    "birthDate": "1990-01-01",
+    "password": "password123"
+}
+
+###
+DELETE http://localhost:5000/api/user/delete/66f407176432b3c398cd7b39

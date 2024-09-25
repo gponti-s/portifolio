@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import UserRepository from "../repositories/userRepository";
 import { UserService } from "../services/userService";
-import { asyncHandler } from "../../utils/asyncHandler";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 const router = Router();
 const userService = new UserService(UserRepository);
