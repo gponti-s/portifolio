@@ -6,6 +6,7 @@ export const ErrorType = {
   UNAUTHORIZED: 'UNAUTHORIZED',
   FORBIDDEN: 'FORBIDDEN',
   INTERNAL_SERVER: 'INTERNAL_SERVER',
+  CONFLICT: 'CONFLICT',
 } as const;
 
 type ErrorTypeKeys = keyof typeof ErrorType;
@@ -16,6 +17,7 @@ const errorMessages: Record<ErrorTypeKeys, string> = {
   UNAUTHORIZED: 'Unauthorized access',
   FORBIDDEN: 'Forbidden access',
   INTERNAL_SERVER: 'Internal server error',
+  CONFLICT: 'Resource already exists',
 };
 
 const statusCodes: Record<ErrorTypeKeys, number> = {
@@ -24,9 +26,10 @@ const statusCodes: Record<ErrorTypeKeys, number> = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
   INTERNAL_SERVER: 500,
+  CONFLICT: 409,
 };
 
-export const createError = (type: ErrorTypeKeys, message?: string) => {
+export const HttpException = (type: ErrorTypeKeys, message?: string) => {
   return new AppError(
     statusCodes[type],
     message || errorMessages[type]

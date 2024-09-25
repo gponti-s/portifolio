@@ -5,20 +5,21 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import userController from "./controllers/userController.js";
 import connectToMongoDB from "./config/database.js";
-import errorHandler from "./utils/error/errorHandler.js";
+import {errorHandler} from "./utils/error/errorHandler.js";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/portifolio";
 
+// Connect to MongoDB
 connectToMongoDB();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
-//app.use(errorHandler);
+app.use(errorHandler);
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
