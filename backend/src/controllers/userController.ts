@@ -2,9 +2,10 @@ import { Router, Request, Response, NextFunction } from "express";
 import UserRepository from "../repositories/userRepository";
 import { UserService } from "../services/userService";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import IUserInput from "models/userModels/IUserInput";
 
 const router = Router();
-const userService = new UserService(UserRepository);
+const userService = new UserService(new UserRepository());
 
 router.get("/", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -26,8 +27,9 @@ router.get("/:id", asyncHandler(async (req: Request, res: Response, next: NextFu
 
 router.post("/create", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const newUser = await userService.createUser(req.body);
-        res.status(201).json(newUser);
+        const newUser: IUserInput = req.body;
+        const createdUser = await userService.createUser(newUser);
+        res.status(201).json(createdUser);
     } catch (error) {
         next(error);
     }
@@ -35,7 +37,8 @@ router.post("/create", asyncHandler(async (req: Request, res: Response, next: Ne
 
 router.put("/update/:id", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const updatedUser = await userService.updateUser(req.params.id, req.body);
+        const userToUpdate: IUserInput = req.body;
+        const updatedUser = await userService.updateUser(req.params.id, userToUpdate);
         res.status(200).json(updatedUser);
     } catch (error) {
         next(error);

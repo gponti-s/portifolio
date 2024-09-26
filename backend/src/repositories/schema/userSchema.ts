@@ -50,7 +50,8 @@ const userSchema = new Schema({
     },
     permissions: {
         type: [String],
-        default: []
+        enum: ['read', 'write', 'delete', 'admin'],
+        default: ['read', 'write']
     }
 }, { timestamps: true });
 

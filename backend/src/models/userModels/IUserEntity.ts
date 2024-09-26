@@ -1,5 +1,5 @@
-
-interface IUser extends Document {
+interface IUserEntity {
+    id: string;
     name: string;
     username: string;
     email: string;
@@ -14,4 +14,4 @@ interface IUser extends Document {
     permissions: string[];
 }
 
-export default IUser;
+export default IUserEntity;

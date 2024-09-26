@@ -1,7 +1,7 @@
 GET http://localhost:5000/api/user/
 
 ###
-GET http://localhost:5000/api/user/66f407176432b3c398cd7b38
+GET http://localhost:5000/api/user/66f407176432b3c398cd7b39
 
 ###
 GET http://localhost:5000/api/user/email/john.doe@example.com
@@ -14,16 +14,16 @@ POST http://localhost:5000/api/user/create
 Content-Type: application/json
 
 {
-    "name": "John Doe",
-    "username": "johndoe",
-    "email": "john.doe@example.com",
+    "name": "Francesco Armani",
+    "username": "fra",
+    "email": "franc.armani@example.com",
     "gender": "male",
-    "country": "USA",
+    "country": "ITA",
     "birthDate": "1990-01-01",
-    "password": "password123"
+    "password": "password444"
 }
 
-###
+
 ###
 PUT http://localhost:5000/api/user/update/66f407176432b3c398cd7b39
 Content-Type: application/json
@@ -35,7 +35,7 @@ Content-Type: application/json
     "gender": "male",
     "country": "USA",
     "birthDate": "1990-01-01",
-    "password": "password123"
+    "password": "password1234"
 }
 
 ###
