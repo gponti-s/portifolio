@@ -1,7 +1,9 @@
 GET http://localhost:5000/api/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsInVzZXJuYW1lIjoiZ3VpbGgiLCJpYXQiOjE3Mjc3MjM0MTEsImV4cCI6MTcyNzcyNzAxMX0.wJzw3KmKv9ndFX_uyQo9ilIoVYpltvYyYTNGlkRkCuU
+
 
 ###
-GET http://localhost:5000/api/user/66f407176432b3c398cd7b39
+GET http://localhost:5000/api/user/66facd5f967fe5ba32daf584
 
 ###
 GET http://localhost:5000/api/user/email/john.doe@example.com
@@ -14,8 +16,8 @@ POST http://localhost:5000/api/user/login
 Content-Type: application/json
 
 {
-    "username": "johndoe",
-    "password": "password1234"
+    "username": "guilh",
+    "password": "password555"
 }
 
 ###
@@ -24,7 +26,7 @@ Content-Type: application/json
 
 {
     "name": "Guilherme",
-    "username": "gui",
+    "username": "guilh",
     "email": "test.armani@example.com",
     "gender": "male",
     "country": "ITA",

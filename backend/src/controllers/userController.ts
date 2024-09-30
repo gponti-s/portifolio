@@ -3,11 +3,12 @@ import UserRepository from "../repositories/userRepository";
 import { UserService } from "../services/userService";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import IUserModel from "services/interfaces/models/IUserModel";
+import { verifyToken} from "../utils/authentication/token"
 
 const router = Router();
 const userService = new UserService(new UserRepository());
 
-router.get("/", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.get("/", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const users = await userService.findAllUsers();
         res.status(200).json(users);
@@ -16,7 +17,7 @@ router.get("/", asyncHandler(async (req: Request, res: Response, next: NextFunct
     }
 }));
 
-router.get("/:id", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.get("/:id", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await userService.findUserById(req.params.id);
         res.status(200).json(user);
@@ -46,7 +47,7 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
     }
 })
 
-router.put("/update/:id", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.put("/update/:id", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userToUpdate: IUserModel = req.body;
         const updatedUser = await userService.updateUser(req.params.id, userToUpdate);
@@ -56,7 +57,7 @@ router.put("/update/:id", asyncHandler(async (req: Request, res: Response, next:
     }
 }));
 
-router.delete("/delete/:id", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.delete("/delete/:id", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const deletedUser = await userService.deleteUser(req.params.id);
         res.status(200).json(deletedUser);
@@ -65,7 +66,7 @@ router.delete("/delete/:id", asyncHandler(async (req: Request, res: Response, ne
     }
 }));
 
-router.get("/email/:email", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.get("/email/:email", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await userService.findUserByEmail(req.params.email);
         res.status(200).json(user);
@@ -74,7 +75,7 @@ router.get("/email/:email", asyncHandler(async (req: Request, res: Response, nex
     }
 }));
 
-router.get("/username/:username", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.get("/username/:username", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await userService.findUserByUsername(req.params.username);
         res.status(200).json(user);
@@ -83,7 +84,7 @@ router.get("/username/:username", asyncHandler(async (req: Request, res: Respons
     }
 }));
 
-router.get("/country/:country", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.get("/country/:country", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const users = await userService.findUsersByCountry(req.params.country);
         res.status(200).json(users);
@@ -92,7 +93,7 @@ router.get("/country/:country", asyncHandler(async (req: Request, res: Response,
     }
 }));
 
-router.get("/gender/:gender", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+router.get("/gender/:gender", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const users = await userService.findUsersByGender(req.params.gender);
         res.status(200).json(users);
