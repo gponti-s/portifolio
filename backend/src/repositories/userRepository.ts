@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 import userSchema from "./schema/userSchema";
-import IUserRepository from "../interfaces/IUserRepository";
-import IUserInput from "models/userModels/IUserInput";
-import IUserEntity from "models/userModels/IUserEntity";
+import IUserRepository from "./interfaces/IUserRepository";
+import IUserEntity from "repositories/interfaces/entities/IUserEntity";
 
 const UserModel = mongoose.model<IUserEntity>("User", userSchema);
 
@@ -16,11 +15,11 @@ class UserRepository implements IUserRepository {
         return await UserModel.findById(id);
     }
 
-    async createUser(user: IUserInput): Promise<IUserEntity> {
+    async createUser(user: IUserEntity): Promise<IUserEntity> {
         return await UserModel.create(user);
     }
 
-    async updateUser(id: string, user: IUserInput): Promise<IUserEntity | null> {
+    async updateUser(id: string, user: IUserEntity): Promise<IUserEntity | null> {
         return await UserModel.findByIdAndUpdate(id, user, { new: true });
     }
 

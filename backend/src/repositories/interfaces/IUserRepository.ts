@@ -1,11 +1,10 @@
-import IUserEntity from "models/userModels/IUserEntity";
-import IUserInput from "models/userModels/IUserInput";
+import IUserEntity from "repositories/interfaces/entities/IUserEntity";
 
 interface IUserRepository {
     findAllUsers(): Promise<IUserEntity[] | null>;
     findUserById(id: string): Promise<IUserEntity    | null>;
-    createUser(user: IUserInput): Promise<IUserEntity | null>;
-    updateUser(id: string, user: IUserInput): Promise<IUserEntity | null>;
+    createUser(user: IUserEntity): Promise<IUserEntity | null>;
+    updateUser(id: string, user: IUserEntity): Promise<IUserEntity | null>;
     deleteUser(id: string): Promise<IUserEntity | null>;
     findUserByEmail(email: string): Promise<IUserEntity | null>;
     findUserByUsername(username: string): Promise<IUserEntity | null>;

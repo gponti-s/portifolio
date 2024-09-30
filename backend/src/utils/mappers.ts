@@ -1,9 +1,9 @@
-import IUserInput from "../models/userModels/IUserInput";
-import IUserOutput from "../models/userModels/IUserOutput";
-import IUserEntity from "../models/userModels/IUserEntity";
+import IUserModel from "../services/interfaces/models/IUserModel";
+import IUserDTO from "../services/interfaces/dto/IUserDTO";
+import IUserEntity from "../repositories/interfaces/entities/IUserEntity";
 
 export class Mapper {
-    static async toUserInput(dto: any): Promise<IUserInput> {
+    static async toUserInput(dto: any): Promise<IUserModel> {
         return {
             name: dto.name,
             username: dto.username,
@@ -12,10 +12,10 @@ export class Mapper {
             country: dto.country,
             gender: dto.gender,
             birthDate: dto.birthDate
-        } as IUserInput;
+        } as IUserModel;
     }
 
-    static async toUserEntity(input: IUserInput): Promise<IUserEntity> {
+    static async toUserEntity(input: IUserModel): Promise<IUserEntity> {
         return {
             name: input.name,
             username: input.username,
@@ -27,7 +27,7 @@ export class Mapper {
         } as IUserEntity;
     }
 
-    static async toUserOutput(user: IUserEntity): Promise<IUserOutput> {
+    static async toUserDTO(user: IUserEntity): Promise<IUserDTO> {
         return {
             id: user.id,
             name: user.name,
@@ -42,7 +42,7 @@ export class Mapper {
             // lastLogin: user.lastLogin,
             // status: user.status,
             // permissions: user.permissions,
-        } as IUserOutput;
+        } as IUserDTO;
     }
 
     // Add more mapping methods as needed

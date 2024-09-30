@@ -1,4 +1,4 @@
-export interface IUserInput {
+export interface IUserModel {
     name: string;
     username: string;
     email: string;
@@ -8,4 +8,4 @@ export interface IUserInput {
     password: string;
 }
 
-export default IUserInput;
+export default IUserModel;

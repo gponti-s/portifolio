@@ -1,12 +1,12 @@
-import IUserOutput from "../models/userModels/IUserOutput";
-import IUserInput from "../models/userModels/IUserInput";
-import UserRepository from "../repositories/userRepository";
+import IUserDTO from "./interfaces/dto/IUserDTO";
+import IUserModel from "./interfaces/models/IUserModel";
 import { HttpException, ErrorType } from "../utils/error/errorType";
 import { Types } from "mongoose";
-import IUserRepository from "../interfaces/IUserRepository";
-import IUserService from "../interfaces/IUserService";
+import IUserRepository from "../repositories/interfaces/IUserRepository";
+import IUserService from "./interfaces/IUserService";
 import Mapper from "../utils/mappers";
-
+import { verifyPassword, hashPassword } from "../utils/authentication/passwordHandle";
+import { generateToken } from "../utils/authentication/token"
 
 export class UserService implements IUserService {
     constructor(private readonly userRepository: IUserRepository) {}
@@ -16,7 +16,7 @@ export class UserService implements IUserService {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid user id");
         }
     }
-    async validateUserExists(user: IUserInput): Promise<void> {
+    async validateUserExists(user: IUserModel): Promise<void> {
         const emailExists = await this.userRepository.findUserByEmail(user.email);
         const usernameExists = await this.userRepository.findUserByUsername(user.username);
         if (emailExists || usernameExists) {
@@ -24,72 +24,75 @@ export class UserService implements IUserService {
         }
     }
     
-    async findAllUsers(): Promise<IUserOutput[]> {
+    async findAllUsers(): Promise<IUserDTO[]> {
         try {
             const users = await this.userRepository.findAllUsers();
             if (!users || users.length === 0) {
                 throw HttpException(ErrorType.NOT_FOUND, "No users found");
             }
-            const response = await Promise.all(users.map(user => Mapper.toUserOutput(user)));
+            const response = await Promise.all(users.map(user => Mapper.toUserDTO(user)));
             return response;
         } catch (error) {
             throw HttpException(ErrorType.INTERNAL_SERVER, "Failed to fetch users");
         }
     }
 
-    async findUserById(id: string): Promise<IUserOutput> {
+    async findUserById(id: string): Promise<IUserDTO> {
         await this.validateObjectId(id);
         try {
             const user = await this.userRepository.findUserById(id);
             if (!user) {
             throw HttpException(ErrorType.NOT_FOUND, "User not found");
             }
-            const response = await Mapper.toUserOutput(user);
+            const response = await Mapper.toUserDTO(user);
             return response;
         } catch (error) {
             throw HttpException(ErrorType.INTERNAL_SERVER, "Failed to fetch user");
         }
     }
 
-    async createUser(user: IUserInput): Promise<IUserOutput> {
+    async createUser(user: IUserModel): Promise<IUserDTO> {
         await this.validateUserExists(user);
         try {
-            const createdUser = await this.userRepository.createUser(user);
+            const userEntity = await Mapper.toUserEntity(user);
+            userEntity.password = await hashPassword(userEntity.password);
+            const createdUser = await this.userRepository.createUser(userEntity);
             if (!createdUser) {
                 throw HttpException(ErrorType.INTERNAL_SERVER, "Failed to create user");
             }
-            const response = await Mapper.toUserOutput(createdUser);
+            const response = await Mapper.toUserDTO(createdUser);
             return response;
         } catch (error: any) {
             throw HttpException(ErrorType.BAD_REQUEST, "Failed to create user");
         }
     }
 
-    async updateUser(id: string, user: IUserInput): Promise<IUserOutput> {
+    async updateUser(id: string, user: IUserModel): Promise<IUserDTO> {
         await this.validateObjectId(id);
         try {
-            const updatedUser = await this.userRepository.updateUser(id, user);
+            const userEntity = await Mapper.toUserEntity(user);
+            const updatedUser = await this.userRepository.updateUser(id, userEntity);
             if (!updatedUser) {
                 throw HttpException(ErrorType.NOT_FOUND, "User not found");
             }
-            const response = Mapper.toUserOutput(updatedUser);
+            const response = Mapper.toUserDTO(updatedUser);
             return response;
         } catch (error: any) {
             throw HttpException(ErrorType.BAD_REQUEST, "Failed to update user");
         }
     }
 
-    async deleteUser(id: string): Promise<IUserOutput> {
+    async deleteUser(id: string): Promise<IUserDTO> {
         await this.validateObjectId(id);
         const deletedUser = await this.userRepository.deleteUser(id);
         if (!deletedUser) {
             throw HttpException(ErrorType.NOT_FOUND, "User not found");
         }
-        const response = await Mapper.toUserOutput(deletedUser);
+        const response = await Mapper.toUserDTO(deletedUser);
         return response;
     }
     
-    async findUserByEmail(email: string): Promise<IUserOutput> {
+    async findUserByEmail(email: string): Promise<IUserDTO> {
         if (!email || typeof email !== 'string') {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid email");
         }
@@ -97,11 +100,11 @@ export class UserService implements IUserService {
         if (!user) {
             throw HttpException(ErrorType.NOT_FOUND, "User not found");
         }
-        const response = await Mapper.toUserOutput(user);
+        const response = await Mapper.toUserDTO(user);
         return response;
     }
 
-    async findUserByUsername(username: string): Promise<IUserOutput> {
+    async findUserByUsername(username: string): Promise<IUserDTO> {
         if (!username || typeof username !== 'string') {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid username");
         }
@@ -109,11 +112,11 @@ export class UserService implements IUserService {
         if (!user) {
             throw HttpException(ErrorType.NOT_FOUND, "User not found");
         }
-        const response = await Mapper.toUserOutput(user);
+        const response = await Mapper.toUserDTO(user);
         return response;
     }
 
-    async findUsersByCountry(country: string): Promise<IUserOutput[]> {
+    async findUsersByCountry(country: string): Promise<IUserDTO[]> {
         if (!country || typeof country !== 'string') {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid country");
         }
@@ -121,11 +124,11 @@ export class UserService implements IUserService {
         if (!users || users.length === 0) {
             throw HttpException(ErrorType.NOT_FOUND, "No users found for the given country");
         }
-        const response = await Promise.all(users.map( user => Mapper.toUserOutput(user)));
+        const response = await Promise.all(users.map( user => Mapper.toUserDTO(user)));
         return response;
     }
 
-    async findUsersByGender(gender: string): Promise<IUserOutput[]> {
+    async findUsersByGender(gender: string): Promise<IUserDTO[]> {
         if (!gender || typeof gender !== 'string') {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid gender");
         }
@@ -133,8 +136,21 @@ export class UserService implements IUserService {
         if (!users || users.length === 0) {
             throw HttpException(ErrorType.NOT_FOUND, "No users found for the given gender");
         }
-        const response = await Promise.all(users.map(user => Mapper.toUserOutput(user)));
+        const response = await Promise.all(users.map(user => Mapper.toUserDTO(user)));
         return response;
+    }
+    async userLogin(username: string, password:string): Promise<string | undefined> {
+        const user = await this.userRepository.findUserByUsername(username);
+        console.log(user)
+        if (user && await verifyPassword(password, user.password)){
+            const token = await generateToken(user);
+            if (token){
+                return token;
+            }
+        } else {
+            throw HttpException("UNAUTHORIZED", 'Invalid credentials' );
+        }
+        
     }
 }
 

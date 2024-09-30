@@ -1,5 +1,5 @@
 
-interface IUserOutput extends Document {
+interface IUserDTO extends Document {
     id: string;
     name: string;
     username: string;
@@ -15,4 +15,4 @@ interface IUserOutput extends Document {
     // permissions: string[];
 }
 
-export default IUserOutput;
+export default IUserDTO;
