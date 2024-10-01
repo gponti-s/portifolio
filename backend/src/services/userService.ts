@@ -7,6 +7,7 @@ import IUserService from "./interfaces/IUserService";
 import Mapper from "../utils/mappers";
 import { verifyPassword, hashPassword } from "../utils/authentication/passwordHandle";
 import { generateToken } from "../utils/authentication/token"
+import { verifyPermission } from "../utils/authorization/permissions";
 
 export class UserService implements IUserService {
     constructor(private readonly userRepository: IUserRepository) {}
@@ -16,11 +17,12 @@ export class UserService implements IUserService {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid user id");
         }
     }
-    async validateUserExists(user: IUserModel): Promise<void> {
-        const emailExists = await this.userRepository.findUserByEmail(user.email);
-        const usernameExists = await this.userRepository.findUserByUsername(user.username);
-        if (emailExists || usernameExists) {
-            throw HttpException(ErrorType.CONFLICT, "User with this email or username already exists");
+    async validateUserExists(username: string, email?: string): Promise<void> {
+        if (email && await this.userRepository.findUserByEmail(email)) {
+            throw HttpException(ErrorType.CONFLICT, "User with this email already exists");
+        }
+        if (await this.userRepository.findUserByUsername(username)) {
+            throw HttpException(ErrorType.CONFLICT, "User with this username already exists");
         }
     }
     
@@ -52,7 +54,7 @@ export class UserService implements IUserService {
     }
 
     async createUser(user: IUserModel): Promise<IUserDTO> {
-        await this.validateUserExists(user);
+        await this.validateUserExists(user.reqBody.username, user.reqBody.email);
         try {
             const userEntity = await Mapper.toUserEntity(user);
             userEntity.password = await hashPassword(userEntity.password);
@@ -68,6 +70,15 @@ export class UserService implements IUserService {
     }
 
     async updateUser(id: string, user: IUserModel): Promise<IUserDTO> {
+        if (id !== user.userLogged.id || !await verifyPermission(user.userLogged.permissions, 'write')) {
+            throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
+        }
+        console.log(user.userLogged.username);
+        console.log(user.reqBody.username);
+        if (user.userLogged.username !== user.reqBody.username){
+            await this.validateUserExists(user.reqBody.username, 
+                user.reqBody.email === user.userLogged.email? undefined : user.reqBody.email);
+        }
         await this.validateObjectId(id);
         try {
             const userEntity = await Mapper.toUserEntity(user);
@@ -75,7 +86,7 @@ export class UserService implements IUserService {
             if (!updatedUser) {
                 throw HttpException(ErrorType.NOT_FOUND, "User not found");
             }
-            const response = Mapper.toUserDTO(updatedUser);
+            const response = await Mapper.toUserDTO(updatedUser);
             return response;
         } catch (error: any) {
             throw HttpException(ErrorType.BAD_REQUEST, "Failed to update user");
@@ -141,9 +152,10 @@ export class UserService implements IUserService {
     }
     async userLogin(username: string, password:string): Promise<string | undefined> {
         const user = await this.userRepository.findUserByUsername(username);
-        console.log(user)
+        
         if (user && await verifyPassword(password, user.password)){
-            const token = await generateToken(user);
+            const userDTO = await Mapper.toUserDTO(user);
+            const token = await generateToken(userDTO);
             if (token){
                 return token;
             }

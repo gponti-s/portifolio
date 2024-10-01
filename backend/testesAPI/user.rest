@@ -1,9 +1,9 @@
 GET http://localhost:5000/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsInVzZXJuYW1lIjoiZ3VpbGgiLCJpYXQiOjE3Mjc3MjM0MTEsImV4cCI6MTcyNzcyNzAxMX0.wJzw3KmKv9ndFX_uyQo9ilIoVYpltvYyYTNGlkRkCuU
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjNzEwOTY3MTNiNzQ0MjhjYWIzMiIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpIiwiZW1haWwiOiJncG9zLmFybWFuaUBleGFtcGxlLmNvbSIsImNvdW50cnkiOiJJVEEiLCJnZW5kZXIiOiJtYWxlIiwiYmlydGhEYXRlIjoiMTk5MC0wMS0wMVQwMDowMDowMC4wMDBaIiwicGVybWlzc2lvbnMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTcyNzc3MTUxMCwiZXhwIjoxNzI3Nzc1MTEwfQ.IkGTzPfek0P9lSS5W4vyP_ze7l1x4hAnfX1-NENIo4o
 
 ###
-GET http://localhost:5000/api/user/66facd5f967fe5ba32daf584
+GET http://localhost:5000/api/user/66fac71096713b74428cab32
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjNzEwOTY3MTNiNzQ0MjhjYWIzMiIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpIiwiZW1haWwiOiJncG9zLmFybWFuaUBleGFtcGxlLmNvbSIsImNvdW50cnkiOiJJVEEiLCJnZW5kZXIiOiJtYWxlIiwiYmlydGhEYXRlIjoiMTk5MC0wMS0wMVQwMDowMDowMC4wMDBaIiwicGVybWlzc2lvbnMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTcyNzc3MTUxMCwiZXhwIjoxNzI3Nzc1MTEwfQ.IkGTzPfek0P9lSS5W4vyP_ze7l1x4hAnfX1-NENIo4o
 
 ###
 GET http://localhost:5000/api/user/email/john.doe@example.com
@@ -36,17 +36,18 @@ Content-Type: application/json
 
 
 ###
-PUT http://localhost:5000/api/user/update/66f407176432b3c398cd7b39
+PUT http://localhost:5000/api/user/update/66facd5f967fe5ba32daf584
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsIm5hbWUiOiJHdWlsaGVybWUiLCJ1c2VybmFtZSI6Imd1aWxoIiwiZW1haWwiOiJ0ZXN0LmFybWFuaUBleGFtcGxlLmNvbSIsImNvdW50cnkiOiJJVEEiLCJnZW5kZXIiOiJtYWxlIiwiYmlydGhEYXRlIjoiMTk5MC0wMS0wMVQwMDowMDowMC4wMDBaIiwicGVybWlzc2lvbnMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTcyNzc3NDM2NywiZXhwIjoxNzI3Nzc3OTY3fQ.elv6oYAKJ2arY8sY4gRux5Phou79b6M_o0IRx5DrTqI
 Content-Type: application/json
 
 {
-    "name": "John Doe",
-    "username": "johndoe",
-    "email": "john.doe@example.com",
+    "name": "Guilherme Seletti",
+    "username": "guilh",
+    "email": "test.armani@example.com",
     "gender": "male",
-    "country": "USA",
+    "country": "ITA",
     "birthDate": "1990-01-01",
-    "password": "password1234"
+    "password": "password555"
 }
 
 ###

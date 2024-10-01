@@ -4,6 +4,7 @@ import { UserService } from "../services/userService";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import IUserModel from "services/interfaces/models/IUserModel";
 import { verifyToken} from "../utils/authentication/token"
+import Mapper from "../utils/mappers";
 
 const router = Router();
 const userService = new UserService(new UserRepository());
@@ -39,7 +40,6 @@ router.post("/register", asyncHandler(async (req: Request, res: Response, next: 
 router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
     try{
         const { username, password } = req.body;
-        console.log(username, password)
         const login = await userService.userLogin(username, password);
         res.status(200).json(login)
     } catch (error) {
@@ -49,8 +49,8 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
 
 router.put("/update/:id", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const userToUpdate: IUserModel = req.body;
-        const updatedUser = await userService.updateUser(req.params.id, userToUpdate);
+        const request = await Mapper.toUserModel(req);
+        const updatedUser = await userService.updateUser(req.params.id, request);
         res.status(200).json(updatedUser);
     } catch (error) {
         next(error);

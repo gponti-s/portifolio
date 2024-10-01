@@ -12,7 +12,7 @@ interface IUserDTO extends Document {
     // updatedAt: Date;
     // lastLogin: Date;
     // status: string;
-    // permissions: string[];
+    permissions: string[];
 }
 
 export default IUserDTO;

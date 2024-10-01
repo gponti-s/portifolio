@@ -3,27 +3,40 @@ import IUserDTO from "../services/interfaces/dto/IUserDTO";
 import IUserEntity from "../repositories/interfaces/entities/IUserEntity";
 
 export class Mapper {
-    static async toUserInput(dto: any): Promise<IUserModel> {
+    static async toUserModel(req: any): Promise<IUserModel> {
         return {
-            name: dto.name,
-            username: dto.username,
-            email: dto.email,
-            password: dto.password,
-            country: dto.country,
-            gender: dto.gender,
-            birthDate: dto.birthDate
+            userLogged: {
+                id: req.userLogged.id,
+                name: req.userLogged.name,
+                username: req.userLogged.username,
+                email: req.userLogged.email,
+                gender: req.userLogged.gender,
+                country: req.userLogged.gender,
+                birthDate: req.userLogged.birthDate,
+                permissions: req.userLogged.permissions,
+            },
+            reqBody: {
+                name: req.body.name,
+                username: req.body.username,
+                email: req.body.email,
+                gender: req.body.gender,
+                country: req.body.country,
+                birthDate: req.body.birthDate,
+                password: req.body.password,
+                permissions: req.body.permissions,
+            }
         } as IUserModel;
     }
 
     static async toUserEntity(input: IUserModel): Promise<IUserEntity> {
         return {
-            name: input.name,
-            username: input.username,
-            email: input.email,
-            password: input.password,
-            country: input.country,
-            gender: input.gender,
-            birthDate: input.birthDate,
+            name: input.reqBody.name,
+            username: input.reqBody.username,
+            email: input.reqBody.email,
+            password: input.reqBody.password,
+            country: input.reqBody.country,
+            gender: input.reqBody.gender,
+            birthDate: input.reqBody.birthDate,
         } as IUserEntity;
     }
 
@@ -41,7 +54,7 @@ export class Mapper {
             // updatedAt: user.updatedAt,
             // lastLogin: user.lastLogin,
             // status: user.status,
-            // permissions: user.permissions,
+            permissions: user.permissions,
         } as IUserDTO;
     }
 
