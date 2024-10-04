@@ -56,6 +56,7 @@ export class UserService implements IUserService {
     async createUser(user: IUserModel): Promise<IUserDTO> {
         await this.validateUserExists(user.reqBody.username, user.reqBody.email);
         try {
+            user.reqBody.password = await hashPassword(user.reqBody.password)
             const userEntity = await Mapper.toUserEntity(user);
             userEntity.password = await hashPassword(userEntity.password);
             const createdUser = await this.userRepository.createUser(userEntity);
@@ -70,22 +71,29 @@ export class UserService implements IUserService {
     }
 
     async updateUser(id: string, user: IUserModel): Promise<IUserDTO> {
+        await this.validateObjectId(id);
+        
         if (id !== user.userLogged.id || !await verifyPermission(user.userLogged.permissions, 'write')) {
             throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
         }
-        console.log(user.userLogged.username);
-        console.log(user.reqBody.username);
+        
         if (user.userLogged.username !== user.reqBody.username){
             await this.validateUserExists(user.reqBody.username, 
                 user.reqBody.email === user.userLogged.email? undefined : user.reqBody.email);
         }
-        await this.validateObjectId(id);
+        
+        if (user.reqBody.password) {
+            user.reqBody.password = await hashPassword(user.reqBody.password);
+        }
+        
         try {
             const userEntity = await Mapper.toUserEntity(user);
             const updatedUser = await this.userRepository.updateUser(id, userEntity);
             if (!updatedUser) {
                 throw HttpException(ErrorType.NOT_FOUND, "User not found");
             }
+            //TODO: do a new loggin when the username is changed
+            //await this.userLogin(updatedUser.username, updatedUser.password);
             const response = await Mapper.toUserDTO(updatedUser);
             return response;
         } catch (error: any) {
@@ -150,6 +158,7 @@ export class UserService implements IUserService {
         const response = await Promise.all(users.map(user => Mapper.toUserDTO(user)));
         return response;
     }
+
     async userLogin(username: string, password:string): Promise<string | undefined> {
         const user = await this.userRepository.findUserByUsername(username);
         
