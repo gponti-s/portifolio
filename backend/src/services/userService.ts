@@ -1,4 +1,5 @@
 import IUserDTO from "./interfaces/dto/IUserDTO";
+import IUserAdminDTO from "./interfaces/dto/IUserAdminDTO";
 import IUserModel from "./interfaces/models/IUserModel";
 import { HttpException, ErrorType } from "../utils/error/errorType";
 import { Types } from "mongoose";
@@ -8,6 +9,7 @@ import Mapper from "../utils/mappers";
 import { verifyPassword, hashPassword } from "../utils/authentication/passwordHandle";
 import { generateToken } from "../utils/authentication/token"
 import { verifyPermission } from "../utils/authorization/permissions";
+import IUserEntity from "repositories/interfaces/entities/IUserEntity";
 
 export class UserService implements IUserService {
     constructor(private readonly userRepository: IUserRepository) {}
@@ -26,14 +28,16 @@ export class UserService implements IUserService {
         }
     }
     
-    async findAllUsers(): Promise<IUserDTO[]> {
+    async findAllUsers(user: IUserModel): Promise<IUserAdminDTO[]> {
+        // if (!await verifyPermission(user.userLogged.permissions, 'admin')) {
+        //     throw HttpException(ErrorType.FORBIDDEN, "Access denied");
+        // }
         try {
             const users = await this.userRepository.findAllUsers();
             if (!users || users.length === 0) {
                 throw HttpException(ErrorType.NOT_FOUND, "No users found");
             }
-            const response = await Promise.all(users.map(user => Mapper.toUserDTO(user)));
-            return response;
+            return await Promise.all(users.map(user => Mapper.toUserAdminDTO(user)));
         } catch (error) {
             throw HttpException(ErrorType.INTERNAL_SERVER, "Failed to fetch users");
         }
@@ -58,7 +62,6 @@ export class UserService implements IUserService {
         try {
             user.reqBody.password = await hashPassword(user.reqBody.password)
             const userEntity = await Mapper.toUserEntity(user);
-            userEntity.password = await hashPassword(userEntity.password);
             const createdUser = await this.userRepository.createUser(userEntity);
             if (!createdUser) {
                 throw HttpException(ErrorType.INTERNAL_SERVER, "Failed to create user");
@@ -72,20 +75,21 @@ export class UserService implements IUserService {
 
     async updateUser(id: string, user: IUserModel): Promise<IUserDTO> {
         await this.validateObjectId(id);
-        
-        if (id !== user.userLogged.id || !await verifyPermission(user.userLogged.permissions, 'write')) {
-            throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
+        if (user.userLogged){
+            if (id !== user.userLogged.id || !await verifyPermission(user.userLogged.permissions, 'write')) {
+                throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
+            }
+            
+            if (user.userLogged.username !== user.reqBody.username){
+                await this.validateUserExists(user.reqBody.username, 
+                    user.reqBody.email === user.userLogged.email? undefined : user.reqBody.email);
+            }
+            
+            if (user.reqBody.password) {
+                user.reqBody.password = await hashPassword(user.reqBody.password);
+            }
         }
-        
-        if (user.userLogged.username !== user.reqBody.username){
-            await this.validateUserExists(user.reqBody.username, 
-                user.reqBody.email === user.userLogged.email? undefined : user.reqBody.email);
-        }
-        
-        if (user.reqBody.password) {
-            user.reqBody.password = await hashPassword(user.reqBody.password);
-        }
-        
+             
         try {
             const userEntity = await Mapper.toUserEntity(user);
             const updatedUser = await this.userRepository.updateUser(id, userEntity);
@@ -101,7 +105,10 @@ export class UserService implements IUserService {
         }
     }
 
-    async deleteUser(id: string): Promise<IUserDTO> {
+    async deleteUser(id: string, user: IUserModel): Promise<IUserDTO> {
+        // if (!await verifyPermission(user.userLogged.permissions, "admin")){
+        //     throw HttpException(ErrorType.FORBIDDEN, '"Access denied"')
+        // }
         await this.validateObjectId(id);
         const deletedUser = await this.userRepository.deleteUser(id);
         if (!deletedUser) {
@@ -161,7 +168,6 @@ export class UserService implements IUserService {
 
     async userLogin(username: string, password:string): Promise<string | undefined> {
         const user = await this.userRepository.findUserByUsername(username);
-        
         if (user && await verifyPassword(password, user.password)){
             const userDTO = await Mapper.toUserDTO(user);
             const token = await generateToken(userDTO);
@@ -171,7 +177,6 @@ export class UserService implements IUserService {
         } else {
             throw HttpException("UNAUTHORIZED", 'Invalid credentials' );
         }
-        
     }
 }
 

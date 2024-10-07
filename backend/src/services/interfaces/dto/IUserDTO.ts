@@ -7,7 +7,7 @@ interface IUserDTO extends Document {
     gender: string;
     country: string;
     birthDate: Date;
-    // password: string;
+    //password: string;
     // createdAt: Date;
     // updatedAt: Date;
     // lastLogin: Date;

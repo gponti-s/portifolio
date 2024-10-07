@@ -1,5 +1,6 @@
 import IUserModel from "../services/interfaces/models/IUserModel";
 import IUserDTO from "../services/interfaces/dto/IUserDTO";
+import IUserAdminDTO from "services/interfaces/dto/IUserAdminDTO";
 import IUserEntity from "../repositories/interfaces/entities/IUserEntity";
 
 export class Mapper {
@@ -49,13 +50,31 @@ export class Mapper {
             country: user.country,
             gender: user.gender,
             birthDate: user.birthDate,
-            // password: user.password,
+            //password: user.password,
             // createdAt: user.createdAt,
             // updatedAt: user.updatedAt,
             // lastLogin: user.lastLogin,
             // status: user.status,
             permissions: user.permissions,
         } as IUserDTO;
+    }
+
+    static async toUserAdminDTO(user: IUserEntity): Promise<IUserAdminDTO> {
+        return {
+            id: user.id,
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            country: user.country,
+            gender: user.gender,
+            birthDate: user.birthDate,
+            password: user.password,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
+            lastLogin: user.lastLogin,
+            status: user.status,
+            permissions: user.permissions,
+        } as IUserAdminDTO;
     }
 
     // Add more mapping methods as needed

@@ -1,5 +1,5 @@
 GET http://localhost:5000/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjNzEwOTY3MTNiNzQ0MjhjYWIzMiIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpIiwiZW1haWwiOiJncG9zLmFybWFuaUBleGFtcGxlLmNvbSIsImNvdW50cnkiOiJJVEEiLCJnZW5kZXIiOiJtYWxlIiwiYmlydGhEYXRlIjoiMTk5MC0wMS0wMVQwMDowMDowMC4wMDBaIiwicGVybWlzc2lvbnMiOlsicmVhZCIsIndyaXRlIl0sImlhdCI6MTcyNzc3MTUxMCwiZXhwIjoxNzI3Nzc1MTEwfQ.IkGTzPfek0P9lSS5W4vyP_ze7l1x4hAnfX1-NENIo4o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpbGgiLCJlbWFpbCI6InRlc3QuYXJtYW5pQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIxOTkwLTAxLTAxVDAwOjAwOjAwLjAwMFoiLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiXSwiaWF0IjoxNzI4MzIzNjM4LCJleHAiOjE3MjgzMjcyMzh9.NzYGlCKd5MmsfoIdXifdGdRoRKg_-v5SDrkLDH9JJXM
 
 ###
 GET http://localhost:5000/api/user/66fac71096713b74428cab32
@@ -16,8 +16,8 @@ POST http://localhost:5000/api/user/login
 Content-Type: application/json
 
 {
-    "username": "guilh",
-    "password": "password555"
+    "username": "fer",
+    "password": "fer123"
 }
 
 ###
@@ -25,13 +25,14 @@ POST http://localhost:5000/api/user/register
 Content-Type: application/json
 
 {
-    "name": "Guilherme",
-    "username": "gui",
-    "email": "test.armani@example.com",
-    "gender": "male",
+    "name": "Fernanda",
+    "username": "fer",
+    "email": "fer.fer@example.com",
+    "gender": "female",
     "country": "ITA",
     "birthDate": "1990-01-01",
-    "password": "password555"
+    "password": "fer123",
+    "permissions": []
 }
 
 
@@ -51,4 +52,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5000/api/user/delete/66f407176432b3c398cd7b39
+DELETE http://localhost:5000/api/user/delete/6703bed8152fea5c1fc43072
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpbGgiLCJlbWFpbCI6InRlc3QuYXJtYW5pQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIxOTkwLTAxLTAxVDAwOjAwOjAwLjAwMFoiLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiXSwiaWF0IjoxNzI4MzIzNjM4LCJleHAiOjE3MjgzMjcyMzh9.NzYGlCKd5MmsfoIdXifdGdRoRKg_-v5SDrkLDH9JJXM

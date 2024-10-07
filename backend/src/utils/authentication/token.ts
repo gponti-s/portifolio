@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import IUserDTO from 'services/interfaces/dto/IUserDTO';
+import { HttpException, ErrorType } from '../error/errorType';
 
 interface CustomRequest extends Request {
     userLogged?: any;
@@ -10,7 +11,7 @@ interface CustomRequest extends Request {
 export async function generateToken(user: IUserDTO) {
     const secret = process.env.JWT_SECRET;
     if (!secret) {
-        throw new Error('JWT_SECRET is not defined');
+        throw HttpException(ErrorType.INTERNAL_SERVER, 'JWT_SECRET is not defined');
     }
     const payload = user;
     const options = { expiresIn: '1h' };
@@ -20,14 +21,17 @@ export async function generateToken(user: IUserDTO) {
 export async function verifyToken(req: CustomRequest, res: Response, next: NextFunction) {
     const token = req.headers['authorization']?.split(' ')[1];
     
-    if (!token) return res.sendStatus(401); 
-    
+    if (!token) {
+        return next(HttpException(ErrorType.BAD_REQUEST, "Token inexistent")); 
+    }
     const jwtSecret = process.env.JWT_SECRET;    
     
-    if (!jwtSecret) return res.sendStatus(500);
+    if (!jwtSecret) {
+        return next(HttpException(ErrorType.INTERNAL_SERVER, "JWT_SECRET is not defined")); 
+    }
     jwt.verify(token, jwtSecret, (err, user) => {
         if (err) {
-            return res.status(403).json({ message: 'Forbidden' });
+            return next(HttpException(ErrorType.FORBIDDEN, 'Forbidden - invalid token')); 
         }
         req.userLogged = user;
         next();

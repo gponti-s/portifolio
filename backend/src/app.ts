@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import userController from "./controllers/userController.js";
-import connectToMongoDB from "./config/database.js";
+import initializeDatabase from "./config/database.js";
 import {errorHandler} from "./utils/error/errorHandler.js";
 
 dotenv.config();
@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Connect to MongoDB
-connectToMongoDB();
+initializeDatabase();
 
 // Middlewares
 app.use(cors());

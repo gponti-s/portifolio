@@ -1,5 +1,5 @@
 export interface IUserModel {
-    userLogged: {
+    userLogged?: {
         id: string;
         name: string;
         username: string;

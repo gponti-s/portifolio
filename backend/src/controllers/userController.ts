@@ -11,7 +11,8 @@ const userService = new UserService(new UserRepository());
 
 router.get("/", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const users = await userService.findAllUsers();
+        const user = await Mapper.toUserModel(req)
+        const users = await userService.findAllUsers(user);
         res.status(200).json(users);
     } catch (error) {
         next(error);
@@ -29,7 +30,9 @@ router.get("/:id", verifyToken, asyncHandler(async (req: Request, res: Response,
 
 router.post("/register", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const newUser: IUserModel = req.body;
+        const newUser: IUserModel = {
+            reqBody: req.body
+        };
         const createdUser = await userService.createUser(newUser);
         res.status(201).json(createdUser);
     } catch (error) {
@@ -59,7 +62,8 @@ router.put("/update/:id", verifyToken, asyncHandler(async (req: Request, res: Re
 
 router.delete("/delete/:id", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const deletedUser = await userService.deleteUser(req.params.id);
+        const user = await Mapper.toUserModel(req);
+        const deletedUser = await userService.deleteUser(req.params.id, user);
         res.status(200).json(deletedUser);
     } catch (error) {
         next(error);
