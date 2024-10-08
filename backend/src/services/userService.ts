@@ -75,31 +75,33 @@ export class UserService implements IUserService {
 
     async updateUser(id: string, user: IUserModel): Promise<IUserDTO> {
         await this.validateObjectId(id);
-        if (user.userLogged){
-            if (id !== user.userLogged.id || !await verifyPermission(user.userLogged.permissions, 'write')) {
-                throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
-            }
-            
-            if (user.userLogged.username !== user.reqBody.username){
-                await this.validateUserExists(user.reqBody.username, 
-                    user.reqBody.email === user.userLogged.email? undefined : user.reqBody.email);
-            }
-            
-            if (user.reqBody.password) {
-                user.reqBody.password = await hashPassword(user.reqBody.password);
-            }
+        if (!user.userLogged) {
+            throw HttpException(ErrorType.UNAUTHORIZED, "User not logged in");
         }
-             
+
+        if (id !== user.userLogged.id || !await verifyPermission(user.userLogged.permissions, 'write')) {
+            throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
+        }
+
+        if (user.userLogged.username !== user.reqBody.username) {
+            await this.validateUserExists(user.reqBody.username, user.reqBody.email !== user.userLogged.email ? user.reqBody.email : undefined);
+        }
+
+        if (user.reqBody.password) {
+            user.reqBody.password = await hashPassword(user.reqBody.password);
+        }
+
         try {
             const userEntity = await Mapper.toUserEntity(user);
             const updatedUser = await this.userRepository.updateUser(id, userEntity);
             if (!updatedUser) {
                 throw HttpException(ErrorType.NOT_FOUND, "User not found");
             }
-            //TODO: do a new loggin when the username is changed
-            //await this.userLogin(updatedUser.username, updatedUser.password);
+            //await this.userLogout(user.userLogged.id);
+            //const newToken = await this.userLogin(updatedUser.username, updatedUser.password);
             const response = await Mapper.toUserDTO(updatedUser);
             return response;
+            //return { ...response, token: newToken };
         } catch (error: any) {
             throw HttpException(ErrorType.BAD_REQUEST, "Failed to update user");
         }
@@ -108,6 +110,10 @@ export class UserService implements IUserService {
     async deleteUser(id: string, user: IUserModel): Promise<IUserDTO> {
         if (!user.userLogged || !await verifyPermission(user.userLogged.permissions, "admin")){
             throw HttpException(ErrorType.FORBIDDEN, '"Access denied"')
+        }
+        const admin = await this.findUserByUsername('admin');
+        if (id === admin.id){
+            throw HttpException(ErrorType.FORBIDDEN, `admin can not be deleted`);
         }
         await this.validateObjectId(id);
         const deletedUser = await this.userRepository.deleteUser(id);
@@ -177,6 +183,10 @@ export class UserService implements IUserService {
         } else {
             throw HttpException("UNAUTHORIZED", 'Invalid credentials' );
         }
+    }
+
+    async userLogout(id: string): Promise<boolean> {
+        return true;
     }
 }
 

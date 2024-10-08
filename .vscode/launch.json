@@ -6,9 +6,15 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/backend/src/app.ts",
-            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-            "preLaunchTask": "tsc: build - tsconfig.json"
+            "program": "${workspaceFolder}/backend/src/app.ts", // Use workspaceFolder for better path resolution
+            "runtimeArgs": [
+                "--loader",
+                "ts-node/esm",
+                "--inspect-brk" 
+            ],
+            "outFiles": ["${workspaceFolder}/backend/dist/**/*.js"], // Use workspaceFolder for better path resolution
+            "sourceMaps": true, // Ensure source maps are enabled
+            "skipFiles": ["<node_internals>/**"]
         }
     ]
 }
