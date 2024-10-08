@@ -1,11 +1,29 @@
 import { useState } from "react";
 import Offcanvas from "./Offcanvas";
+import { Modal, Button } from "react-bootstrap";
+import { getAllUsers, loginUser } from "../api";
 
 function Navbar({ allRoutes, isMenuVisible, setMenuVisible }) {
   let [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false); //TO DO: get this state from ether
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [showModal, setShowModal] = useState(false);
+  let [username, setUsername] = useState("");
+  let [password, setPassword] = useState("");
 
   function toggleMenu() {
     setMenuVisible(!isMenuVisible);
+  }
+
+  async function handleLogin() {
+    console.log("User logged in", username, password);
+    const response = await loginUser(username, password);
+    if (response){
+      //TODO: rewei this state. Check login
+      setIsLoggedIn(isLoggedIn === false);
+      setShowModal(false);
+    } else {
+      alert("login error");
+    }
   }
 
   return (
@@ -51,10 +69,56 @@ function Navbar({ allRoutes, isMenuVisible, setMenuVisible }) {
           <span className="navbar-text me-2" style={{ color: "white" }}>{isWalletConnectedSwitch ? "Wallet Connected" : "Connect Wallet"}
           </span>
         </div>
+        <button 
+          className="btn btn-outline-secondary ms-2" 
+          onClick={() => setShowModal(true)} // Open modal on button click
+          style={{ color: "white" }}
+        >
+          {isLoggedIn ? "logout" : "login"}
+        </button>
       </div>
+
       {isMenuVisible && (
         <Offcanvas toggleMenu={toggleMenu} allRoutes={allRoutes} />
       )}
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label"><b>Username</b></label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label"><b>Password</b></label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleLogin}>
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </nav>
   );
 }
