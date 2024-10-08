@@ -8,7 +8,7 @@ export interface IUserModel {
         country: string;
         birthDate: Date;
         password: string;
-        permissions: [];
+        permissions: Array<'red' | 'write' | 'admin'>;
     };
     reqBody: {
         name: string;
@@ -18,7 +18,7 @@ export interface IUserModel {
         country: string;
         birthDate: Date;
         password: string;
-        permissions: [];
+        permissions: Array<'red' | 'write' | 'admin'>;
     }
 }
 

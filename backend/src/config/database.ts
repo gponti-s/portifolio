@@ -19,42 +19,46 @@ async function initializeDatabase() {
         await mongoose.connect(mongoURI);
         console.log('Connected to MongoDB');
         
-        // const adminUsername = process.env.ADMIN_USERNAME as string;
-        // const adminPassword = process.env.ADMIN_PASSWORD as string;
-        // const adminEmail = process.env.ADMIN_EMAIL as string;
-        // console.log(adminPassword, adminEmail, adminUsername)
+        const adminUsername = process.env.ADMIN_USERNAME as string;
+        const adminPassword = process.env.ADMIN_PASSWORD as string;
+        const adminEmail = process.env.ADMIN_EMAIL as string;
         
-        // if (adminUsername && adminEmail && adminPassword) {
-        //     const user: IUserModel = {
-        //         userLogged: {
-        //             id: '',
-        //             name: 'Admin',
-        //             username: adminUsername,
-        //             email: adminEmail,
-        //             gender: '',
-        //             country: '',
-        //             birthDate: new Date(),
-        //             password: adminPassword,
-        //             permissions: []
-        //         },
-        //         reqBody: {
-        //             name: 'Admin',
-        //             username: adminUsername,
-        //             email: adminEmail,
-        //             gender: 'male',
-        //             country: 'ITA',
-        //             birthDate: new Date(),
-        //             password: adminPassword,
-        //             permissions: []
-        //         }
-        //     };
-        //     await userService.createUser(user);
-        //} 
+        if (adminUsername && adminEmail && adminPassword) {
+            const existingAdmin = await userService.findUserByUsername(adminUsername);
+            if (!existingAdmin) {
+                const user: IUserModel = {
+                    userLogged: {
+                        id: '',
+                        name: 'Admin',
+                        username: adminUsername,
+                        email: adminEmail,
+                        gender: '',
+                        country: '',
+                        birthDate: new Date(),
+                        password: adminPassword,
+                        permissions: []
+                    },
+                    reqBody: {
+                        name: 'Admin',
+                        username: adminUsername,
+                        email: adminEmail,
+                        gender: 'male',
+                        country: 'ITA',
+                        birthDate: new Date(),
+                        password: adminPassword,
+                        permissions: []
+                    }
+                };
+                await userService.createUser(user);
+            } else {
+                console.log('Admin user already exists');
+            }
+        } 
     } catch (error) {
         console.error('Error connecting to MongoDB or initializing admin:', error);
-        //await mongoose.disconnect();
+        await mongoose.disconnect();
         console.log('Disconnected from MongoDB');
-        //process.exit(1);
+        process.exit(1);
     }
 }
     

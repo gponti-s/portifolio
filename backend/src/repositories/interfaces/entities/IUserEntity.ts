@@ -11,7 +11,8 @@ interface IUserEntity {
     updatedAt: Date;
     lastLogin: Date;
     status: string;
-    permissions: string[];
+    permissions: Array<'red' | 'write' | 'admin'>;
+
 }
 
 export default IUserEntity;

@@ -55,4 +55,11 @@ const userSchema = new Schema({
     }
 }, { timestamps: true });
 
+userSchema.pre('save', function(next){
+    if (!this.permissions || this.permissions.length === 0){
+        this.permissions = ['read', 'write'];
+    }
+    next();
+});
+
 export default userSchema;

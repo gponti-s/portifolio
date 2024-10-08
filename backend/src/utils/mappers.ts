@@ -34,10 +34,11 @@ export class Mapper {
             name: input.reqBody.name,
             username: input.reqBody.username,
             email: input.reqBody.email,
-            password: input.reqBody.password,
             country: input.reqBody.country,
             gender: input.reqBody.gender,
             birthDate: input.reqBody.birthDate,
+            password: input.reqBody.password,
+            permissions: input.reqBody.permissions,
         } as IUserEntity;
     }
 
@@ -77,7 +78,6 @@ export class Mapper {
         } as IUserAdminDTO;
     }
 
-    // Add more mapping methods as needed
 }
 
 export default Mapper;

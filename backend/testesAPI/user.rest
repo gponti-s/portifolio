@@ -1,5 +1,5 @@
 GET http://localhost:5000/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpbGgiLCJlbWFpbCI6InRlc3QuYXJtYW5pQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIxOTkwLTAxLTAxVDAwOjAwOjAwLjAwMFoiLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiXSwiaWF0IjoxNzI4MzIzNjM4LCJleHAiOjE3MjgzMjcyMzh9.NzYGlCKd5MmsfoIdXifdGdRoRKg_-v5SDrkLDH9JJXM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDQzMmEyYTg4ZmQ3ZDA5M2UyMjEyNiIsIm5hbWUiOiJBZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LTEwLTA3VDE5OjEyOjM0LjEwMloiLCJwZXJtaXNzaW9ucyI6W10sImlhdCI6MTcyODM4MDA5MCwiZXhwIjoxNzI4MzgzNjkwfQ.XqnmrW54Pt31RiLsIgTwRSw0NrzCkW1v59IEGvx006A
 
 ###
 GET http://localhost:5000/api/user/66fac71096713b74428cab32
@@ -16,8 +16,8 @@ POST http://localhost:5000/api/user/login
 Content-Type: application/json
 
 {
-    "username": "fer",
-    "password": "fer123"
+    "username": "admin",
+    "password": "admin123"
 }
 
 ###
@@ -25,16 +25,15 @@ POST http://localhost:5000/api/user/register
 Content-Type: application/json
 
 {
-    "name": "Fernanda",
-    "username": "fer",
-    "email": "fer.fer@example.com",
+    "name": "Tereza",
+    "username": "tereza",
+    "email": "tete@example.com",
     "gender": "female",
     "country": "ITA",
     "birthDate": "1990-01-01",
-    "password": "fer123",
+    "password": "tereza123",
     "permissions": []
 }
-
 
 ###
 PUT http://localhost:5000/api/user/update/66facd5f967fe5ba32daf584
@@ -52,5 +51,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5000/api/user/delete/6703bed8152fea5c1fc43072
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZmFjZDVmOTY3ZmU1YmEzMmRhZjU4NCIsIm5hbWUiOiJHdWlsaGVybWUgU2VsZXR0aSIsInVzZXJuYW1lIjoiZ3VpbGgiLCJlbWFpbCI6InRlc3QuYXJtYW5pQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIxOTkwLTAxLTAxVDAwOjAwOjAwLjAwMFoiLCJwZXJtaXNzaW9ucyI6WyJyZWFkIiwid3JpdGUiXSwiaWF0IjoxNzI4MzIzNjM4LCJleHAiOjE3MjgzMjcyMzh9.NzYGlCKd5MmsfoIdXifdGdRoRKg_-v5SDrkLDH9JJXM
+DELETE http://localhost:5000/api/user/delete/670433fab8e5beceea2d0792
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDQzMmEyYTg4ZmQ3ZDA5M2UyMjEyNiIsIm5hbWUiOiJBZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LTEwLTA3VDE5OjEyOjM0LjEwMloiLCJwZXJtaXNzaW9ucyI6W10sImlhdCI6MTcyODM4MDA5MCwiZXhwIjoxNzI4MzgzNjkwfQ.XqnmrW54Pt31RiLsIgTwRSw0NrzCkW1v59IEGvx006A
