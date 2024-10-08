@@ -9,7 +9,7 @@ import Mapper from "../utils/mappers";
 import { verifyPassword, hashPassword } from "../utils/authentication/passwordHandle";
 import { generateToken } from "../utils/authentication/token"
 import { verifyPermission } from "../utils/authorization/permissions";
-import IUserEntity from "repositories/interfaces/entities/IUserEntity";
+
 
 export class UserService implements IUserService {
     constructor(private readonly userRepository: IUserRepository) {}
@@ -29,9 +29,9 @@ export class UserService implements IUserService {
     }
     
     async findAllUsers(user: IUserModel): Promise<IUserAdminDTO[]> {
-        // if (!await verifyPermission(user.userLogged.permissions, 'admin')) {
-        //     throw HttpException(ErrorType.FORBIDDEN, "Access denied");
-        // }
+        if (!user.userLogged || !await verifyPermission(user.userLogged.permissions, 'admin')) {
+            throw HttpException(ErrorType.FORBIDDEN, "Access denied");
+        }
         try {
             const users = await this.userRepository.findAllUsers();
             if (!users || users.length === 0) {
@@ -106,9 +106,9 @@ export class UserService implements IUserService {
     }
 
     async deleteUser(id: string, user: IUserModel): Promise<IUserDTO> {
-        // if (!await verifyPermission(user.userLogged.permissions, "admin")){
-        //     throw HttpException(ErrorType.FORBIDDEN, '"Access denied"')
-        // }
+        if (!user.userLogged || !await verifyPermission(user.userLogged.permissions, "admin")){
+            throw HttpException(ErrorType.FORBIDDEN, '"Access denied"')
+        }
         await this.validateObjectId(id);
         const deletedUser = await this.userRepository.deleteUser(id);
         if (!deletedUser) {

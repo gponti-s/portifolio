@@ -9,7 +9,7 @@ import {errorHandler} from "./utils/error/errorHandler.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
 initializeDatabase();
@@ -28,7 +28,15 @@ app.use(rateLimit({
 // Routes
 app.use("/api/user", userController);
 
-
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`\u001b[32m\u2714 Server running at port ${PORT}\u001b[0m`);
+}).on('error', (err) => {
+  const error = err as NodeJS.ErrnoException;
+  if (error.code === 'EADDRINUSE') {
+      console.error(`\u001b[31m\u274c Port ${PORT} is already in use. Please choose a different port.\u001b[0m`);
+      process.exit(1); 
+  } else {
+      console.error('\u001b[31m\u274c Error starting the server:\u001b[0m', err);
+      process.exit(1);
+  }
 });
