@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-//import {ethers} from 'ethers'
-//import Lock from './artifacts/contracts/Lock.sol/Lock.json';
+import { BrowserRouter } from "react-router-dom";
 import { AllRoutes } from "./components/AllRoutes";
 import Navbar from "./components/Navbar";
-import { BrowserRouter } from "react-router-dom";
 import { AboutPage } from "./pages/AboutPage";
 import { ArticlesPage } from "./pages/ArticlesPage";
 import { ContactPage } from "./pages/ContactPage";
 import { ProjectPage } from "./pages/ProjectPage";
-
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   const allRoutes = [
@@ -20,7 +18,8 @@ function App() {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
       <div className="app-container">
         <Navbar
           allRoutes={allRoutes}
@@ -32,6 +31,7 @@ function App() {
         </div>
       </div>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
