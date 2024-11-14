@@ -16,12 +16,13 @@ function Navbar({ allRoutes, isMenuVisible, setMenuVisible }) {
   }
 
   async function handleLogin() {
-    console.log("User logged in", username, password);
     const response = await loginUser(username, password);
     if (response){
       //TODO: rewei this state. Check login
       setIsLoggedIn(isLoggedIn === false);
       setShowModal(false);
+      const userLogged = JSON.parse(localStorage.getItem("userLogged"));
+      console.log(userLogged);
     } else {
       alert("login error");
     }
@@ -82,7 +83,6 @@ function Navbar({ allRoutes, isMenuVisible, setMenuVisible }) {
       {isMenuVisible && (
         <Offcanvas toggleMenu={toggleMenu} allRoutes={allRoutes} />
       )}
-
       <LoginModal 
         showModal={showModal} 
         setShowModal={setShowModal} 

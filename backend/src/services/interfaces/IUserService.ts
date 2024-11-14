@@ -9,7 +9,7 @@ interface IUserService {
     createUser(user: IUserModel): Promise<IUserDTO>;
     updateUser(id: string, user: IUserModel): Promise<IUserDTO>;
     deleteUser(id: string, user: IUserModel): Promise<IUserDTO>;
-    userLogin(username: string, password: string): Promise<string | undefined>;
+    userLogin(username: string, password: string): Promise<{token: string; userDTO: IUserDTO} | undefined>;
 }
 
 export default IUserService;

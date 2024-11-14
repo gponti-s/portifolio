@@ -1,7 +1,11 @@
+import Viewport from "../components/Viewport";
+
 export const ProjectPage = () => {
   return (
-    <div className="viewport">
-      <h1>ProjectPage</h1>
-    </div>
+    <Viewport>
+      <div className="content-container">
+        <h1>ProjectPage</h1>
+      </div>
+    </Viewport>
   );
 }

@@ -172,13 +172,13 @@ export class UserService implements IUserService {
         return response;
     }
 
-    async userLogin(username: string, password:string): Promise<string | undefined> {
+    async userLogin(username: string, password: string): Promise<{token: string; userDTO: IUserDTO} | undefined> {
         const user = await this.userRepository.findUserByUsername(username);
         if (user && await verifyPassword(password, user.password)){
             const userDTO = await Mapper.toUserDTO(user);
             const token = await generateToken(userDTO);
             if (token){
-                return token;
+                return {token, userDTO};
             }
         } else {
             throw HttpException("UNAUTHORIZED", 'Invalid credentials' );

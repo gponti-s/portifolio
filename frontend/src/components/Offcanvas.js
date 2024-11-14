@@ -41,11 +41,11 @@ function Offcanvas({ toggleMenu, allRoutes }) {
   
   return (
     <div
-    className="offcanvas offcanvas-start show text-bg-dark"
-    tabindex="-1"
-    id="offcanvasDark"
-    aria-labelledby="offcanvasDarkLabel"
-    ref={menuRef}
+      className="offcanvas offcanvas-start show text-bg-dark"
+      tabindex="-1"
+      id="offcanvasDark"
+      aria-labelledby="offcanvasDarkLabel"
+      ref={menuRef}
     >
       <div className="offcanvas-header">
         <button
@@ -65,7 +65,6 @@ function Offcanvas({ toggleMenu, allRoutes }) {
           items={routeNames}
           handleClickItem={handleClickItem}
         />
-        {/* <p>Place offcanvas content here.</p> */}
       </div>
     </div>
   );
