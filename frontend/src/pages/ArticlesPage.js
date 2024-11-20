@@ -12,7 +12,7 @@ export const ArticlesPage = () => {
   return (
     <Viewport>
       <div className="content-container">
-        <h1>In Construction - ArticlePage</h1>
+        <h1 className="pageTitle">In Construction - ArticlePage</h1>
         <br />
         <div className="row">
           {
