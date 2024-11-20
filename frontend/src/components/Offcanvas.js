@@ -1,8 +1,10 @@
 import ListGroup from "./ListGroup";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 function Offcanvas({ allRoutes }) {
+  const {appTitle, appSubTitle} = useAuth();
   const [selectedItem, setSelectedItem] = useState("");
   const navigate = useNavigate();
   const routeNames = allRoutes.map((route) => route.name);
@@ -53,7 +55,7 @@ function Offcanvas({ allRoutes }) {
       >
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-            Backdrop with scrolling
+            logo
           </h5>
           <button
             type="button"
@@ -64,8 +66,8 @@ function Offcanvas({ allRoutes }) {
         </div>
         <div class="offcanvas-body">
           <ListGroup
-            title={"Guilherme Seletti"}
-            subtitle={"Portifolio"}
+            title={appTitle}
+            subtitle={appSubTitle}
             selectedItem={selectedItem}
             setSelectedItem={setSelectedItem}
             items={routeNames}

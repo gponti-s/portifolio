@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 function Navbar({ allRoutes }) {
   let [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false); //TO DO: get this state from ether
-  const { isLoggedIn, setIsLoggedIn } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, appTitle, appSubTitle } = useAuth();
   let [showModal, setShowModal] = useState(false);
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
@@ -35,9 +35,9 @@ function Navbar({ allRoutes }) {
 
         <div className=" me-auto mb-2 mb-lg-0">
           <span className="navbar-brand" style={{ color: "white" }}>
-            Guilherme Seletti
+            {appTitle}
           </span>
-          <span className="navbar-text">Portfolio</span>
+          <span className="navbar-text">{appSubTitle}</span>
         </div>
         <div className="form-check form-switch d-flex">
           <input

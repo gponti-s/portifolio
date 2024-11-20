@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AllRoutes } from "./components/AllRoutes";
 import Navbar from "./components/Navbar";
@@ -15,7 +15,6 @@ function App() {
     { name: "Project", path: "/project", element: <ProjectPage /> },
     { name: "Contact", path: "/contact", element: <ContactPage /> },
   ];
-  const [isMenuVisible, setMenuVisible] = useState(false);
 
   return (
     <AuthProvider>
@@ -23,10 +22,8 @@ function App() {
       <div className="app-container">
         <Navbar
           allRoutes={allRoutes}
-          isMenuVisible={isMenuVisible}
-          setMenuVisible={setMenuVisible}
         />
-        <div className={`content-container ${isMenuVisible ? "backdrop" : ""}`}>
+        <div className="content-container">
           <AllRoutes allRoutes={allRoutes} />
         </div>
       </div>
