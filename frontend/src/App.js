@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AllRoutes } from "./components/AllRoutes";
 import Navbar from "./components/Navbar";
@@ -9,6 +9,9 @@ import { ProjectPage } from "./pages/ProjectPage";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
+  useEffect(() => {
+    document.title = process.env.REACT_APP_TITLE
+  })
   const allRoutes = [
     { name: "About", path: "/", element: <AboutPage /> },
     { name: "Articles", path: "/articles", element: <ArticlesPage /> },

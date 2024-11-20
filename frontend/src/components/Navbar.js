@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Offcanvas from "./Offcanvas";
 import { loginUser } from "../api/auth";
 import LoginModal from "./LoginModal";
@@ -34,10 +35,11 @@ function Navbar({ allRoutes }) {
         <Offcanvas allRoutes={allRoutes}></Offcanvas>
 
         <div className=" me-auto mb-2 mb-lg-0">
-          <span className="navbar-brand" style={{ color: "white" }}>
+        {/* <img src="%PUBLIC_URL%/favicon.webp" alt="Logo" /> */}
+        <Link to="/" className="navbar-brand" style={{ color: "white" }}>
             {appTitle}
-          </span>
-          <span className="navbar-text">{appSubTitle}</span>
+          </Link>
+          <Link to="/" className="navbar-text" style={{ textDecoration: "none" }}>{appSubTitle}</Link>
         </div>
         <div className="form-check form-switch d-flex">
           <input
