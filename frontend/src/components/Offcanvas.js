@@ -1,12 +1,11 @@
 import ListGroup from "./ListGroup";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Offcanvas({ toggleMenu, allRoutes }) {
+function Offcanvas({ allRoutes }) {
   const [selectedItem, setSelectedItem] = useState("");
   const navigate = useNavigate();
   const routeNames = allRoutes.map((route) => route.name);
-  let menuRef = useRef();
 
   useEffect(() => {
     const activeRoute = allRoutes.find(
@@ -16,57 +15,65 @@ function Offcanvas({ toggleMenu, allRoutes }) {
     setSelectedItem(initialSelectedItem);
   }, [allRoutes]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && event && !menuRef.current.contains(event.target)) {
-        toggleMenu();
-      }
-    };
-  
-    document.addEventListener("mousedown", handleClickOutside);
-  
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
 
   function handleClickItem(item) {
     const route = allRoutes.find((route) => route.name === item);
     if (route) {
       navigate(route.path);
     }
-    toggleMenu();
     setSelectedItem(item);
   }
-  
+
   return (
-    <div
-      className="offcanvas offcanvas-start show text-bg-dark"
-      tabindex="-1"
-      id="offcanvasDark"
-      aria-labelledby="offcanvasDarkLabel"
-      ref={menuRef}
-    >
-      <div className="offcanvas-header">
-        <button
-          type="button"
-          className="btn-close btn-close-white"
-          data-bs-dismiss="offcanvasDark"
-          aria-label="Close"
-          onClick={toggleMenu}
-        ></button>
-      </div>
-      <div className="offcanvas-body">
-        <ListGroup
-          title={"Guilherme Seletti"}
-          subtitle={"Portifolio"}
-          selectedItem={selectedItem}
-          setSelectedItem={setSelectedItem}
-          items={routeNames}
-          handleClickItem={handleClickItem}
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="30"
+        height="30"
+        fill="white"
+        className="bi bi-list me-2"
+        viewBox="0 0 16 16"
+        cursor="pointer"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasWithBothOptions"
+        aria-controls="offcanvasWithBothOptions"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
         />
+      </svg>
+
+      <div
+        class="offcanvas offcanvas-start"
+        data-bs-scroll="true"
+        tabindex="-1"
+        id="offcanvasWithBothOptions"
+        aria-labelledby="offcanvasWithBothOptionsLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
+            Backdrop with scrolling
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <ListGroup
+            title={"Guilherme Seletti"}
+            subtitle={"Portifolio"}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+            items={routeNames}
+            handleClickItem={handleClickItem}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
