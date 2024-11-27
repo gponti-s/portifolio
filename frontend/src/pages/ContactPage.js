@@ -5,9 +5,11 @@ export const ContactPage = () => {
     <Viewport>
 
       <div className="content-container">
-        <h1>In Construction - ContactPage</h1>
-        <br></br>
-        <form className="row g-3 needs-validation" novalidate>
+        <div className="section section-black">
+          <h1 className="section-title">Contact</h1>
+          <p>Leave a message...</p>
+        </div>
+        <form className="section section-gray row g-3 needs-validation" data-bs-theme="dark" novalidate>
           <div className="col-md-4">
             <label for="validationFirstName" className="form-label">
               First name
@@ -71,7 +73,7 @@ export const ContactPage = () => {
           </div>
           <br></br>
           <div className="col-auto">
-            <button type="submit" className="btn btn-secondary">
+            <button type="submit" className="btn btn-dark">
               Send
             </button>
           </div>

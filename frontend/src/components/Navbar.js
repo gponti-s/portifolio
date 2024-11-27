@@ -36,7 +36,7 @@ function Navbar({ allRoutes }) {
 
         <div className=" me-auto mb-2 mb-lg-0">
         {/* <img src="%PUBLIC_URL%/favicon.webp" alt="Logo" /> */}
-        <Link to="/" className="navbar-brand" style={{ color: "white" }}>
+        <Link to="/" className="navbar-brand " style={{ color: "white" }}>
             {appTitle}
           </Link>
           <Link to="/" className="navbar-text" style={{ textDecoration: "none" }}>{appSubTitle}</Link>

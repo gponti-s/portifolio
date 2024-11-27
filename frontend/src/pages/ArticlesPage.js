@@ -12,8 +12,10 @@ export const ArticlesPage = () => {
   return (
     <Viewport>
       <div className="content-container">
-        <h1 className="pageTitle">In Construction - ArticlePage</h1>
-        <br />
+        <div className="section section-black">
+        <h1 className="section-title">Articles</h1>
+        <p>In this page you going to find all articles</p>
+        </div>
         <div className="row">
           {
             allCards.map((card, index) => (
