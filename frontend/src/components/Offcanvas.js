@@ -1,15 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/AuthContext";
-import { Link } from "react-router-dom";
 
 function Offcanvas() {
-  const { appTitle, appSubTitle } = useAuth();
+  const { appTitle } = useAuth();
   const [selectedItem, setSelectedItem] = useState("");
   const navigate = useNavigate();
   const closeButtonRef = useRef(null);
 
-  // Define your routes directly in the component
   const routes = [
     { name: "About", path: "/" },
     { name: "Articles", path: "/articles" },
@@ -19,21 +17,16 @@ function Offcanvas() {
   ];
 
   useEffect(() => {
-    const activeRoute = routes.find(
-      (route) => window.location.pathname === route.path
-    );
-    const initialSelectedItem = activeRoute ? activeRoute.name : "";
+    const initialSelectedItem = routes.find(route => window.location.pathname === route.path)?.name || "";
     setSelectedItem(initialSelectedItem);
-  }, []);
+  }, [routes]);
 
   function handleClickItem(item) {
-    const route = routes.find((route) => route.name === item);
+    const route = routes.find(route => route.name === item);
     if (route) {
       navigate(route.path);
-      setSelectedItem(item); // Update selected item
-      if (closeButtonRef.current) {
-        closeButtonRef.current.click();
-      }
+      setSelectedItem(item);
+      closeButtonRef.current?.click();
     }
   }
 
@@ -77,9 +70,13 @@ function Offcanvas() {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <ul  className="list-group list-group-flush list-group-item-dark">
-            {routes.map((route) => (
-              <li  key={route.path} className={`list-group-item  ${window.location.pathname === route.path ? 'active' : 'list-group-item-action'}`} onClick={() => handleClickItem(route.name)}>
+          <ul className="list-group list-group-flush list-group-item-dark">
+            {routes.map(route => (
+              <li
+                key={route.path}
+                className={`list-group-item ${selectedItem === route.name ? 'active' : 'list-group-item-action'}`}
+                onClick={() => handleClickItem(route.name)}
+              >
                 {route.name}
               </li>
             ))}
