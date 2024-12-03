@@ -6,7 +6,7 @@ export const AboutPage = () => {
     // fetch data to the page
     //fetchData(process.env.REACT_APP_URL_ABOUTPAGE)
     return(
-        <Viewport>
+        <>
             <div className="section section-black section-grid">                
                 <div>
                 <h1 className='section-title'>About Us</h1>
@@ -35,6 +35,6 @@ Why do we use it?.</p>
                 </div>
 
             </div>
-        </Viewport>
+        </>
     );
 }

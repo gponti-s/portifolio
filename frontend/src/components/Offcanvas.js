@@ -1,29 +1,40 @@
-import ListGroup from "./ListGroup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../store/AuthContext";
+import { Link } from "react-router-dom";
 
-function Offcanvas({ allRoutes }) {
-  const {appTitle, appSubTitle} = useAuth();
+function Offcanvas() {
+  const { appTitle, appSubTitle } = useAuth();
   const [selectedItem, setSelectedItem] = useState("");
   const navigate = useNavigate();
-  const routeNames = allRoutes.map((route) => route.name);
+  const closeButtonRef = useRef(null);
+
+  // Define your routes directly in the component
+  const routes = [
+    { name: "About", path: "/" },
+    { name: "Articles", path: "/articles" },
+    { name: "Project", path: "/project" },
+    { name: "Contact", path: "/contact" },
+    { name: "Reading", path: "/reading" },
+  ];
 
   useEffect(() => {
-    const activeRoute = allRoutes.find(
+    const activeRoute = routes.find(
       (route) => window.location.pathname === route.path
     );
     const initialSelectedItem = activeRoute ? activeRoute.name : "";
     setSelectedItem(initialSelectedItem);
-  }, [allRoutes]);
-
+  }, []);
 
   function handleClickItem(item) {
-    const route = allRoutes.find((route) => route.name === item);
+    const route = routes.find((route) => route.name === item);
     if (route) {
       navigate(route.path);
+      setSelectedItem(item); // Update selected item
+      if (closeButtonRef.current) {
+        closeButtonRef.current.click();
+      }
     }
-    setSelectedItem(item);
   }
 
   return (
@@ -41,38 +52,38 @@ function Offcanvas({ allRoutes }) {
         aria-controls="offcanvasWithBothOptions"
       >
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
         />
       </svg>
 
       <div
-        class="offcanvas offcanvas-start"
+        className="offcanvas offcanvas-start"
         data-bs-scroll="true"
-        tabindex="-1"
+        tabIndex="-1"
         id="offcanvasWithBothOptions"
         aria-labelledby="offcanvasWithBothOptionsLabel"
       >
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-            logo
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="offcanvasWithBothOptionsLabel">
+            {appTitle}
           </h5>
           <button
             type="button"
-            class="btn-close"
+            className="btn-close"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
+            ref={closeButtonRef}
           ></button>
         </div>
-        <div class="offcanvas-body">
-          <ListGroup
-            title={appTitle}
-            subtitle={appSubTitle}
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
-            items={routeNames}
-            handleClickItem={handleClickItem}
-          />
+        <div className="offcanvas-body">
+          <ul  className="list-group list-group-flush list-group-item-dark">
+            {routes.map((route) => (
+              <li  key={route.path} className={`list-group-item  ${window.location.pathname === route.path ? 'active' : 'list-group-item-action'}`} onClick={() => handleClickItem(route.name)}>
+                {route.name}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </>

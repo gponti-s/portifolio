@@ -7,7 +7,6 @@ export const Viewport = ({ children }) => {
         <div className="viewport-container">
             { children }
         </div>
-        <div className="footer">FOOTER</div>
         </>
     );
 }

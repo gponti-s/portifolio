@@ -2,10 +2,9 @@ import Viewport from "../components/Viewport";
 
 export const ContactPage = () => {
   return (
-    <Viewport>
-
+    <>
       <div className="content-container">
-        <div className="section section-black">
+        <div className="section ">
           <h1 className="section-title">Contact</h1>
           <p>Leave a message...</p>
         </div>
@@ -79,6 +78,6 @@ export const ContactPage = () => {
           </div>
         </form>
       </div>
-    </Viewport>
+    </>
   );
 };

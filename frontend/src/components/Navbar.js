@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Offcanvas from "./Offcanvas";
-import { loginUser } from "../api/auth";
+import { loginUser } from "../services/auth";
 import LoginModal from "./LoginModal";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../store/AuthContext";
 
 function Navbar({ allRoutes }) {
   let [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false); //TO DO: get this state from ether
@@ -15,7 +15,7 @@ function Navbar({ allRoutes }) {
   async function handleLogin() {
     const response = await loginUser(username, password);
     if (response) {
-      //TODO: rewei this state. Check login
+      //TODO: review state. Check login.
       setIsLoggedIn(isLoggedIn === false);
       setShowModal(false);
       const userLogged = JSON.parse(localStorage.getItem("userLogged"));
@@ -27,19 +27,25 @@ function Navbar({ allRoutes }) {
 
   return (
     <nav
-      className="navbar bg-dark border-bottom border-body fixed-top"
+      className="navbar bg-dark fixed-top"
       data-bs-theme="dark"
       style={{ opacity: "0.9" }}
     >
       <div className="container-fluid">
         <Offcanvas allRoutes={allRoutes}></Offcanvas>
 
-        <div className=" me-auto mb-2 mb-lg-0">
-        {/* <img src="%PUBLIC_URL%/favicon.webp" alt="Logo" /> */}
-        <Link to="/" className="navbar-brand " style={{ color: "white" }}>
+        <div id="appTitle" className="me-auto mb-2 mb-lg-0">
+          {/* <img src="%PUBLIC_URL%/favicon.webp" alt="Logo" /> */}
+          <Link to="/" className="navbar-brand " style={{ color: "white" }}>
             {appTitle}
           </Link>
-          <Link to="/" className="navbar-text" style={{ textDecoration: "none" }}>{appSubTitle}</Link>
+          <Link
+            to="/"
+            className="navbar-text"
+            style={{ textDecoration: "none" }}
+          >
+            {appSubTitle}
+          </Link>
         </div>
         <div className="form-check form-switch d-flex">
           <input

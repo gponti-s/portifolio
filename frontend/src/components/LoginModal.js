@@ -3,10 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 
 function LoginModal ({ showModal, setShowModal, handleLogin, username, setUsername, password, setPassword }) {  
     return (
-    <Modal show={showModal} onHide={() => setShowModal(false)}>
-      <Modal.Header style={{ background: "#eeeeee" }} closeButton>
-        <Modal.Title>Login</Modal.Title>
-      </Modal.Header>
+    <Modal data-bs-theme="dark"  style={{color: "white"}} show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Body>
         <form>
           <div className="mb-3 row">
@@ -33,16 +30,13 @@ function LoginModal ({ showModal, setShowModal, handleLogin, username, setUserna
               />
             </div>
           </div>
-        </form>
-      </Modal.Body>
-      <Modal.Footer style={{ background: "#eeeeee" }}>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleLogin}>
+          <div className="d-flex justify-content-end">
+          <Button variant="secondary" style={{alignItems:"right"}} onClick={handleLogin}>
           Login
         </Button>
-      </Modal.Footer>
+          </div>
+        </form>
+      </Modal.Body>
     </Modal>
   );
 };

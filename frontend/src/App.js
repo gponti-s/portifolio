@@ -1,36 +1,46 @@
 import React, { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { AllRoutes } from "./components/AllRoutes";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import { AboutPage } from "./pages/AboutPage";
 import { ArticlesPage } from "./pages/ArticlesPage";
 import { ContactPage } from "./pages/ContactPage";
 import { ProjectPage } from "./pages/ProjectPage";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider } from "./store/AuthContext";
+import { ReadingPage } from "./pages/ReadingPage";
+import Viewport from "./components/Viewport";
+import { Footer } from "./components/Footer";
 
 function App() {
   useEffect(() => {
-    document.title = process.env.REACT_APP_TITLE
-  })
+    document.title = process.env.REACT_APP_TITLE;
+  });
   const allRoutes = [
     { name: "About", path: "/", element: <AboutPage /> },
     { name: "Articles", path: "/articles", element: <ArticlesPage /> },
     { name: "Project", path: "/project", element: <ProjectPage /> },
     { name: "Contact", path: "/contact", element: <ContactPage /> },
+    { name: "Reading", path: "/reading", element: <ReadingPage /> },
   ];
 
   return (
     <AuthProvider>
-      <BrowserRouter>
-      <div className="app-container">
-        <Navbar
-          allRoutes={allRoutes}
-        />
-        <div className="content-container">
-          <AllRoutes allRoutes={allRoutes} />
+      <Router>
+        <div className="app">
+          <Navbar allRoutes={allRoutes} />
+          <Viewport>
+            <Routes>
+              <Route path="/" element={<AboutPage />} />
+              <Route path="/articles" element={<ArticlesPage />} />
+              <Route path="/project" element={<ProjectPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/reading" element={<ReadingPage />} />
+              {/* <Route path="*" element={<NotFoundPage />} /> */}
+            </Routes>
+            {/* <AllRoutes allRoutes={allRoutes} /> */}
+          </Viewport>
+          <Footer />
         </div>
-      </div>
-    </BrowserRouter>
+      </Router>
     </AuthProvider>
   );
 }
