@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Offcanvas from "./Offcanvas";
 import { loginUser } from "../services/auth";
@@ -6,16 +6,31 @@ import LoginModal from "./LoginModal";
 import { useAuth } from "../store/AuthContext";
 
 function Navbar({ allRoutes }) {
-  let [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false); //TO DO: get this state from ether
+  const [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false);
   const { isLoggedIn, setIsLoggedIn, appTitle, appSubTitle } = useAuth();
-  let [showModal, setShowModal] = useState(false);
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   async function handleLogin() {
     const response = await loginUser(username, password);
     if (response) {
-      //TODO: review state. Check login.
       setIsLoggedIn(isLoggedIn === false);
       setShowModal(false);
       const userLogged = JSON.parse(localStorage.getItem("userLogged"));
@@ -27,16 +42,15 @@ function Navbar({ allRoutes }) {
 
   return (
     <nav
-      className="navbar bg-dark fixed-top"
+      className={`navbar fixed-top ${isScrolled ? "bg-dark" : "bg-transparent"}`}
       data-bs-theme="dark"
-      style={{ opacity: "0.9" }}
+      style={{ opacity: '0.9' }}
     >
-      <div className="container-fluid">
+      <div className="container-fluid mx-3">
         <Offcanvas allRoutes={allRoutes}></Offcanvas>
 
         <div id="appTitle" className="me-auto mb-2 mb-lg-0">
-          {/* <img src="%PUBLIC_URL%/favicon.webp" alt="Logo" /> */}
-          <Link to="/" className="navbar-brand " style={{ color: "white" }}>
+          <Link to="/" className="navbar-brand" style={{ color: "white" }}>
             {appTitle}
           </Link>
           <Link
