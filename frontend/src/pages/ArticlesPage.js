@@ -39,9 +39,9 @@ export const ArticlesPage = () => {
 
   return (
     <>
-      <div className="content-container">
-        <div className="section ">
-          <h1 className="section-title">Articles</h1>
+      <div className="container">
+        <div className="section section-black">
+          <h3 className="section-title">Articles</h3>
           <p>In this page you going to find all articles</p>
         </div>
         <div className="row">

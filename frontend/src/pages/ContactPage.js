@@ -3,11 +3,8 @@ import Viewport from "../components/Viewport";
 export const ContactPage = () => {
   return (
     <>
-      <div className="content-container">
-        <div className="section ">
-          <h1 className="section-title">Contact</h1>
-          <p>Leave a message...</p>
-        </div>
+      <div className="container">
+
         <form className="section section-gray row g-3 needs-validation" data-bs-theme="dark" novalidate>
           <div className="col-md-4">
             <label for="validationFirstName" className="form-label">

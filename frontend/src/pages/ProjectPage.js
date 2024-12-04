@@ -8,7 +8,6 @@ export const ProjectPage = () => {
         {/* <div className="section section-black">
           <h1 className="section-title">Project Page</h1>
         </div> */}
-        <Scrollspy/>
       </div>
     </>
   );

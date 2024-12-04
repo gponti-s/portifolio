@@ -70,7 +70,7 @@ function Offcanvas() {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <ul className="list-group list-group-flush list-group-item-dark">
+          <ul className="list-group list-group-flush list-group-item-dark rounded-3">
             {routes.map(route => (
               <li
                 key={route.path}
