@@ -4,8 +4,11 @@ import Offcanvas from "./Offcanvas";
 import { loginUser } from "../services/auth";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../store/AuthContext";
+import { allRoutesType } from "../App";
 
-function Navbar({ allRoutes }) {
+
+
+export const Navbar: React.FC = () => {
   const [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false);
   const { isLoggedIn, setIsLoggedIn, appTitle, appSubTitle } = useAuth();
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +36,8 @@ function Navbar({ allRoutes }) {
     if (response) {
       setIsLoggedIn(isLoggedIn === false);
       setShowModal(false);
-      const userLogged = JSON.parse(localStorage.getItem("userLogged"));
+      const userLoggedString = localStorage.getItem("userLogged");
+      const userLogged = userLoggedString ? JSON.parse(userLoggedString) : null;
       console.log(userLogged);
     } else {
       alert("login error");
@@ -47,7 +51,7 @@ function Navbar({ allRoutes }) {
       style={{ opacity: '0.9' }}
     >
       <div className="container-fluid mx-3">
-        <Offcanvas allRoutes={allRoutes}></Offcanvas>
+        <Offcanvas></Offcanvas>
 
         <div id="appTitle" className="me-auto mb-2 mb-lg-0">
           <Link to="/" className="navbar-brand" style={{ color: "white" }}>

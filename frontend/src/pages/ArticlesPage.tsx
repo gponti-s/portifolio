@@ -2,8 +2,13 @@ import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Viewport from "../components/Viewport";
 
-export const ArticlesPage = () => {
-  const allCards = [
+export const ArticlesPage: React.FC = () => {
+  const allCards: Array<{
+    cadTitle: string;
+    cardSummary: string;
+    cardImage: string;
+    cardButtonText: string;
+  }> = [
     {
       cadTitle: "First Title",
       cardSummary:
@@ -33,7 +38,7 @@ export const ArticlesPage = () => {
 
   const navigate = useNavigate();
 
-  function handleReadMore(){
+  function handleReadMore(): void {
     navigate("/reading");
   }
 

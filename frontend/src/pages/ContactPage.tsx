@@ -1,10 +1,18 @@
 import Viewport from "../components/Viewport";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-export const ContactPage = () => {
-  const { register, handleSubmit, reset, getValues, formState: { errors, isSubmitting} } = useForm();
 
-  async function onSubmit(data) {
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  message: string;
+}
+
+export const ContactPage: React.FC = () => {
+  const { register, handleSubmit, reset, getValues, formState: { errors, isSubmitting} } = useForm<FormData>();
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log(data);
     reset();
@@ -17,7 +25,6 @@ export const ContactPage = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="section section-gray row g-3 needs-validation"
           data-bs-theme="dark"
-          novalidate
         >
           <div className="col-md-4">
             <input
@@ -58,7 +65,6 @@ export const ContactPage = () => {
             <textarea
               {...register("message", { required: "message is required"})}
               className="form-control"
-              type="text"
               placeholder="Write your message here..."
               id="validationMessage"
               aria-describedby="inputGroupPrepend"

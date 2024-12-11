@@ -1,7 +1,15 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-function LoginModal ({ showModal, setShowModal, handleLogin, username, setUsername, password, setPassword }) {  
+export const LoginModal: React.FC<{
+  showModal: boolean;
+  setShowModal: (show: boolean) => void;
+  handleLogin: () => void;
+  username: string;
+  setUsername: (username: string) => void;
+  password: string;
+  setPassword: (password: string) => void;
+}> = ({ showModal, setShowModal, handleLogin, username, setUsername, password, setPassword }) => {  
     return (
     <Modal data-bs-theme="dark"  style={{color: "white"}} show={showModal} onHide={() => setShowModal(false)}>
       <Modal.Body>

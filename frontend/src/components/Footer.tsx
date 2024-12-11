@@ -1,8 +1,8 @@
-import { useAuth } from "../store/AuthContext";
+import { useAuth, AuthContextType } from "../store/AuthContext";
 
-export const Footer = () => {
-    const { appTitle, appSubTitle } = useAuth();
-    const currentYear = new Date().getFullYear();
+export const Footer: React.FC = () => {
+    const { appTitle, appSubTitle }: AuthContextType = useAuth();
+    const currentYear: number = new Date().getFullYear();
 
     return (
         <div className="footer">

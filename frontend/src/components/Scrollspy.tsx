@@ -1,7 +1,7 @@
 import React from "react";
 import "../Style.css";
 
-export const Scrollspy = () => {
+export const Scrollspy: React.FC = () => {
   return (
     <div className="container-fluid">
       <div
@@ -63,7 +63,7 @@ export const Scrollspy = () => {
             data-bs-smooth-scroll="true"
             className="scrollspy-example-2"
             style={{ height: "100%" }}
-            tabIndex="0"
+            tabIndex={0}
           >
             <div id="item-1">
               <h4>Item 1</h4>

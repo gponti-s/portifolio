@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiBaseURL = process.env.REACT_APP_URL_API_BASE;
 
-export async function fetchUserById(id){
+export async function fetchUserById(id: string){
     try {
         const token = localStorage.getItem('token');
         const response = await axios.get(`${apiBaseURL}/user/${id}`, {

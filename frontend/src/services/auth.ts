@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiBaseURL = process.env.REACT_APP_URL_API_BASE;
 
-export async function loginUser(username, password){
+export async function loginUser(username: string, password: string){
     try {
         const response = await axios.post(`${apiBaseURL}/user/login`, { 
             "username": username,

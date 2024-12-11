@@ -2,13 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/AuthContext";
 
+interface Route {
+  name: string;
+  path: string;
+}
+
 function Offcanvas() {
   const { appTitle } = useAuth();
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState<string>("");
   const navigate = useNavigate();
-  const closeButtonRef = useRef(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const routes = [
+  const routes: Route[] = [
     { name: "About", path: "/" },
     { name: "Articles", path: "/articles" },
     { name: "Project", path: "/project" },
@@ -21,7 +26,7 @@ function Offcanvas() {
     setSelectedItem(initialSelectedItem);
   }, [routes]);
 
-  function handleClickItem(item) {
+  function handleClickItem(item: string) {
     const route = routes.find(route => route.name === item);
     if (route) {
       navigate(route.path);
@@ -53,7 +58,7 @@ function Offcanvas() {
       <div
         className="offcanvas offcanvas-start"
         data-bs-scroll="true"
-        tabIndex="-1"
+        tabIndex={-1}
         id="offcanvasWithBothOptions"
         aria-labelledby="offcanvasWithBothOptionsLabel"
       >

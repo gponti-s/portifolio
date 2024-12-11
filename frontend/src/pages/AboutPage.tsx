@@ -1,8 +1,8 @@
 import React from "react";
 
-export const AboutPage = () => {
+export const AboutPage: React.FC = () => {
   return (
-    <div className="container">
+    <div>
       <div className="section section-black section-grid">
         <div>
           <h1 className="section-title">About Us</h1>

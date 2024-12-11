@@ -10,10 +10,17 @@ import { ReadingPage } from "./pages/ReadingPage";
 import Viewport from "./components/Viewport";
 import { Footer } from "./components/Footer";
 
-function App() {
+export interface allRoutesType {
+  name: string;
+  path: string;
+  element: React.ReactNode;
+}
+
+const App: React.FC = () => {
   useEffect(() => {
-    document.title = process.env.REACT_APP_TITLE;
-  });
+    document.title = process.env.REACT_APP_TITLE || "Guilherme Seletti";
+  }, []);
+
   const allRoutes = [
     { name: "About", path: "/", element: <AboutPage /> },
     { name: "Articles", path: "/articles", element: <ArticlesPage /> },
@@ -26,7 +33,7 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="app">
-          <Navbar allRoutes={allRoutes} />
+          <Navbar/>
           <Viewport>
             <Routes>
               <Route path="/" element={<AboutPage />} />

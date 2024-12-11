@@ -1,7 +1,7 @@
 import { Scrollspy } from "../components/Scrollspy";
 import Viewport from "../components/Viewport";
 
-export const ProjectPage = () => {
+export const ProjectPage: React.FC = () => {
   return (
     <>
       <div className="">
