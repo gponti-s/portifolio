@@ -2,6 +2,8 @@ import { useAuth } from "../store/AuthContext";
 
 export const Footer = () => {
     const { appTitle, appSubTitle } = useAuth();
+    const currentYear = new Date().getFullYear();
+
     return (
         <div className="footer">
             <div
@@ -37,7 +39,7 @@ export const Footer = () => {
                 <h5 className="">{appTitle}</h5>
                 <h6 className="text-secondary">{appSubTitle}</h6>
                 <p className="fw-lighter fst-italic" style={{ fontSize: "11px" }}>
-                    Copyright © 2024 {appTitle}
+                    Copyright © {currentYear} {appTitle}
                 </p>
             </div>
         </div>

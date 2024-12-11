@@ -1,75 +1,78 @@
 import Viewport from "../components/Viewport";
+import { useForm } from "react-hook-form";
 
 export const ContactPage = () => {
+  const { register, handleSubmit, reset, getValues, formState: { errors, isSubmitting} } = useForm();
+
+  async function onSubmit(data) {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    console.log(data);
+    reset();
+  }
+
   return (
     <>
       <div className="container">
-
-        <form className="section section-gray row g-3 needs-validation" data-bs-theme="dark" novalidate>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="section section-gray row g-3 needs-validation"
+          data-bs-theme="dark"
+          novalidate
+        >
           <div className="col-md-4">
-            <label for="validationFirstName" className="form-label">
-              First name
-            </label>
             <input
+              {...register("firstName", {required: "First Name is required"})}
               type="text"
               className="form-control"
-              id="validationFirstName"
-              required
+              placeholder="Fist Name"
             />
-            <div className="invalid-feedback">Looks good!</div>
+            { errors.firstName && (<p className="text-light">{`${errors.firstName.message}`}</p>)}
           </div>
           <div className="col-md-4 ">
-            <label for="validationLastName" className="form-label">
-              Last name
-            </label>
             <input
+              {...register("lastName", {required: "Last Name is requeired"})}
               type="text"
               className="form-control"
-              id="validationLastName"
-              required
+              placeholder="Last Name"
             />
-            <div className="invalid-feedback">Looks good!</div>
+            {errors.lastName && (<p>{`${errors.lastName.message}`}</p>)}
           </div>
           <div className="col-md-4">
-            <label for="validationEmail" className="form-label">
-              Email
-            </label>
             <div className="input-group has-validation">
               <span className="input-group-text" id="inputGroupPrepend">
                 @
               </span>
               <input
+                {...register("email", {required: "email is required"})}
                 type="text"
                 className="form-control"
                 id="validationEmail"
                 aria-describedby="inputGroupPrepend"
                 placeholder="example@email.com"
-                required
               />
-              <div className="invalid-feedback">Please enter an email.</div>
+              { errors.email && (<p>{`${errors.email.message}`}</p>)}
             </div>
           </div>
           <br></br>
-          <div className="">
-            <label for="validationMessage" className="form-label">
-              Message
-            </label>
-            <div className="input-group has-validation">
-              <textarea
-                className="form-control"
-                type="text"
-                placeholder="Write your message here..."
-                id="validationMessage"
-                aria-describedby="inputGroupPrepend"
-                required
-                style={{ height: "200px" }}
-              ></textarea>
-              <div className="invalid-feedback">Please enter an message.</div>
-            </div>
+          <div className="input-group has-validation">
+            <textarea
+              {...register("message", { required: "message is required"})}
+              className="form-control"
+              type="text"
+              placeholder="Write your message here..."
+              id="validationMessage"
+              aria-describedby="inputGroupPrepend"
+              style={{ height: "200px" }}
+            ></textarea>
+            {errors.message && (<p>{`${errors.message.message}`}</p>)}
           </div>
           <br></br>
           <div className="col-auto">
-            <button type="submit" className="btn btn-dark">
+            <button 
+            type="submit" 
+            className="btn btn-dark"
+            disabled={isSubmitting}
+            >
               Send
             </button>
           </div>

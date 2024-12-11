@@ -1,6 +1,9 @@
+html, body{
+  background-color: #1a1d29eb; 
+}
+
 .app{
-  background-color: #1a1d29eb;
-  
+  background-color: #1a1d29eb; 
 }
 
 .viewport-container {
