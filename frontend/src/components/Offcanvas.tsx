@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/AuthContext";
+import { ALL_ROUTES_PUBLIC } from "../constants/routes";
 
 interface Route {
   name: string;
@@ -13,21 +14,14 @@ function Offcanvas() {
   const navigate = useNavigate();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const routes: Route[] = [
-    { name: "About", path: "/" },
-    { name: "Articles", path: "/articles" },
-    { name: "Project", path: "/project" },
-    { name: "Contact", path: "/contact" },
-    { name: "Reading", path: "/reading" },
-  ];
 
   useEffect(() => {
-    const initialSelectedItem = routes.find(route => window.location.pathname === route.path)?.name || "";
+    const initialSelectedItem = ALL_ROUTES_PUBLIC.find(route => window.location.pathname === route.path)?.name || "";
     setSelectedItem(initialSelectedItem);
-  }, [routes]);
+  }, [ALL_ROUTES_PUBLIC]);
 
   function handleClickItem(item: string) {
-    const route = routes.find(route => route.name === item);
+    const route = ALL_ROUTES_PUBLIC.find(route => route.name === item);
     if (route) {
       navigate(route.path);
       setSelectedItem(item);
@@ -76,7 +70,7 @@ function Offcanvas() {
         </div>
         <div className="offcanvas-body">
           <ul className="list-group list-group-flush list-group-item-dark rounded-3">
-            {routes.map(route => (
+            {ALL_ROUTES_PUBLIC.map(route => (
               <li
                 key={route.path}
                 className={`list-group-item ${selectedItem === route.name ? 'active' : 'list-group-item-action'}`}

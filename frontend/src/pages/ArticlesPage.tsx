@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
-import Viewport from "../components/Viewport";
 
 export const ArticlesPage: React.FC = () => {
   const allCards: Array<{

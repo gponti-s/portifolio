@@ -4,7 +4,6 @@ import Offcanvas from "./Offcanvas";
 import { loginUser } from "../services/auth";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../store/AuthContext";
-import { allRoutesType } from "../App";
 
 
 

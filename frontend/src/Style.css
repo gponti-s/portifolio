@@ -1,21 +1,22 @@
 html, body{
+  min-height: 100%;
   background-color: #1a1d29eb; 
 }
 
 .app{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   background-color: #1a1d29eb; 
 }
 
 .viewport-container {
+  flex: 1;
   display: flex;
   flex-direction: column; 
   text-align: center;
   width: 100%;
-  /* height: 100vh; */
-  padding-top: 80px;
-  padding-left: 30px;
-  padding-right: 30px;
-  /* border: 10px solid red */
+  padding: 80px 30px 0;
 }
 
 .section {
@@ -25,23 +26,21 @@ html, body{
   margin-bottom: 50px;
   box-shadow: 0 4px 30px rgba(0, 0, 0);
   text-align: justify;
-  /* border: 10px solid blue; */
-}
-
-.section-black {
-  background-color: rgb(19, 19, 19);
-}
-
-
-.section-gray {
-  color: black;
-  background-color: #c0c0c079;
 }
 
 .section-grid{
   display: grid;
   grid-template-columns: auto auto;
   gap: 50px;
+}
+
+.section-black {
+  background-color: rgb(19, 19, 19);
+}
+
+.section-gray {
+  color: black;
+  background-color: #c0c0c079;
 }
 
 .section-title{
@@ -56,10 +55,6 @@ html, body{
   background-color: black;
 }
 
-.content-container {
-  min-height: 70vh;
-  border: 10px solid green
-}
 
 .card {
   box-shadow: 0 4px 30px rgba(0, 0, 0);
@@ -73,10 +68,6 @@ html, body{
   text-align: justify;
 }
 
-.pageTitle{
-  font-weight: bold;
-  color: whitesmoke;
-}
 
 .font-gold{
   font-weight: bold;

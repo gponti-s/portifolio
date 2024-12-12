@@ -2,8 +2,8 @@ import React from "react";
 
 export const AboutPage: React.FC = () => {
   return (
-    <div>
-      <div className="section section-black section-grid">
+    <div className="container">
+      <div className="mx-5 section section-black section-grid">
         <div>
           <h1 className="section-title">About Us</h1>
           <img
@@ -37,7 +37,7 @@ export const AboutPage: React.FC = () => {
           </p>
         </div>
       </div>
-      <div className="section section-gray">
+      <div className="section section-gray mx-5">
         <h2 className="section-title">Our Mission</h2>
         <p>
           TLorem Ipsum is simply dummy text of the printing and typesetting
@@ -73,7 +73,7 @@ export const AboutPage: React.FC = () => {
           fugiat quo voluptas nulla pariatur?".
         </p>
       </div>
-      <div className="section-grid">
+      <div className="section-grid mx-5">
         <div className="section section-black">
           <h2 className="section-title">Contact Us</h2>
           <p>
