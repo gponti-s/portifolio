@@ -55,19 +55,9 @@ html, body{
   background-color: black;
 }
 
-
-.card {
-  box-shadow: 0 4px 30px rgba(0, 0, 0);
+.nav-link:hover{
+  background-color: rgb(68, 68, 68);
 }
-
-.card-title{
-  font-weight: bold;
-}
-
-.card-text{
-  text-align: justify;
-}
-
 
 .font-gold{
   font-weight: bold;

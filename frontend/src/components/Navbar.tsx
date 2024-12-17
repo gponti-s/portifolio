@@ -30,19 +30,51 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
+  
   async function handleLogin() {
     const response = await loginUser(username, password);
     if (response) {
-      setIsLoggedIn(isLoggedIn === false);
+      setIsLoggedIn(true);
       setShowModal(false);
       const userLoggedString = localStorage.getItem("userLogged");
       const userLogged = userLoggedString ? JSON.parse(userLoggedString) : null;
       console.log(userLogged);
     } else {
-      alert("login error");
+      alert("Login error");
     }
   }
-
+  
+  async function connectWallet() {
+    await checkWalletConnection();
+    if(isWalletConnectedSwitch){
+      alert("Wallet already connected")
+    } else {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          setWalletConnectedSwitch(accounts.length > 0);
+          console.log("Wallet connected");
+        } catch (error) {
+          console.error("Error connecting to wallet:", error);
+          alert("Failed to connect wallet. Please try again.");
+        }
+      } else {
+        alert("Please install MetaMask!");
+      }
+    }
+  }
+  
+  const checkWalletConnection = async () => {
+    if (window.ethereum) {
+      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      setWalletConnectedSwitch(accounts.length > 0); // Set state based on whether accounts exist
+    }
+  };
+  
+  useEffect(() => {
+    checkWalletConnection();
+  }, []);
+  
   return (
     <nav
       className={`navbar fixed-top ${isScrolled ? "bg-dark" : "bg-transparent"}`}
@@ -64,30 +96,57 @@ export const Navbar: React.FC = () => {
             {appSubTitle}
           </Link>
         </div>
-        <div className="form-check form-switch d-flex">
-          <input
-            className="form-check-input me-2"
-            type="checkbox"
-            id="flexSwitchCheckDefault"
-            style={{ margin: "auto" }}
-            onClick={() => {
-              console.log("Checkbox clicked");
-              setWalletConnectedSwitch(!isWalletConnectedSwitch);
-            }}
-          />
-          <span className="navbar-text me-2" style={{ color: "white" }}>
-            {isWalletConnectedSwitch ? "Wallet Connected" : "Connect Wallet"}
-          </span>
-        </div>
-        <button
-          className="btn btn-outline-secondary ms-2"
+
+        <a
+          className="nav-link rounded-pill p-2 ms-2"
           onClick={() => setShowModal(true)}
           style={{ color: "white" }}
         >
-          {isLoggedIn ? "logout" : "login"}
-        </button>
-      </div>
+          {isLoggedIn ? "Logout" : "Login"}
+        </a>
+        <div>
+          <a 
+            className="nav-link rounded-circle mx-2" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            style={{ 
+              cursor: 'pointer', 
+              width: '40px',
+              height: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              
+            }}
+          >
+            <i className="bi bi-three-dots-vertical text-light hover-icon-secondary"></i>
+          </a>
+          <ul className="dropdown-menu dropdown-menu-end">
+            <li><a className="dropdown-item" href="#">Sign in</a></li>
+            <li><a className="dropdown-item" href="#">Another action</a></li>
+            <li><a className="dropdown-item" href="#">Something else here</a></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li><a className="dropdown-item" href="#">Separated link</a></li>
+            <li><hr className="dropdown-divider" /></li>
+            <li>
+              <div className="dropdown-item form-check form-switch d-flex">
+                <span className="me-2">
+                  {isWalletConnectedSwitch ? "Wallet Connected" : "Connect Wallet"}
+                </span>
+                <input
+                  className="form-check-input me-2"
+                  type="checkbox"
+                  id="flexSwitchCheckDefault"
+                  style={{ margin: "auto" }}
+                  onClick={connectWallet}
+                  checked={isWalletConnectedSwitch}
+                />
+          </div>
+            </li>
+          </ul>
 
+        </div>
+      </div>
       <LoginModal
         showModal={showModal}
         setShowModal={setShowModal}

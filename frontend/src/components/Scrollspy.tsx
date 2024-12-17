@@ -14,9 +14,17 @@ export const Scrollspy: React.FC = () => {
             overflowY: "auto",
             height: "calc(100vh - 120px)",
             top: "80px",
+             padding: "20px",
           }}
-        >
+          >
+            <i className="bi bi-arrow-left text-secondary fs-3"
+            onClick={() => window.history.back()}
+            title="Go Back"
+            style={{cursor: "pointer"}}
+            ></i>
+          <div>
           <strong className="flex-column">TITLE</strong>
+          </div>
           <hr></hr>
           <nav
             id="navbar-example3"
