@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from 'react-router-dom';
 import { ALL_ROUTES } from "../constants/routes";
+import { NotFoundPage } from "../pages/NotFoundPage";
 import '../Style.css';
 
 export const Viewport: React.FC = () => {
@@ -10,7 +11,6 @@ export const Viewport: React.FC = () => {
                 {ALL_ROUTES.map((route) => (
                     <Route key={route.path} path={route.path} element={route.element} />
                 ))}
-                {/* <Route path="*" element={<NotFoundPage />} /> */}
             </Routes>
         </div>
     );

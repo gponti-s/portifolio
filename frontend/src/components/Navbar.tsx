@@ -129,15 +129,15 @@ export const Navbar: React.FC = () => {
             <li><a className="dropdown-item" href="#">Separated link</a></li>
             <li><hr className="dropdown-divider" /></li>
             <li>
-              <div className="dropdown-item form-check form-switch d-flex">
-                <span className="me-2">
+              <div className="dropdown-item form-check form-switch d-flex  ">
+                <span className="me-2 text-body-dark">
                   {isWalletConnectedSwitch ? "Wallet Connected" : "Connect Wallet"}
                 </span>
                 <input
                   className="form-check-input me-2"
                   type="checkbox"
                   id="flexSwitchCheckDefault"
-                  style={{ margin: "auto" }}
+                  style={{ margin: "auto", cursor:"pointer"}}
                   onClick={connectWallet}
                   checked={isWalletConnectedSwitch}
                 />

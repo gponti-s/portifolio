@@ -4,7 +4,7 @@ import { ArticlesPage } from "../pages/ArticlesPage"
 import { ProjectPage } from "../pages/ProjectPage"
 import { ContactPage } from "../pages/ContactPage"
 import { ReadingPage } from "../pages/ReadingPage"
-
+import { NotFoundPage } from "../pages/NotFoundPage"
 
 
 export const ALL_ROUTES: RouteType[] = [
@@ -41,6 +41,13 @@ export const ALL_ROUTES: RouteType[] = [
         name: "Reading", 
         path: "/reading", 
         element: <ReadingPage />,
+        offcanvas: true
+    },
+    {
+        group: RouteGroups.PRIVATE,
+        name:"NotFound",
+        path: "*",
+        element: <NotFoundPage />,
         offcanvas: true
     }
 ]
