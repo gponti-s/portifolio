@@ -67,7 +67,7 @@ export const Navbar: React.FC = () => {
   const checkWalletConnection = async () => {
     if (window.ethereum) {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      setWalletConnectedSwitch(accounts.length > 0); // Set state based on whether accounts exist
+      setWalletConnectedSwitch(accounts.length > 0);
     }
   };
   
@@ -79,7 +79,7 @@ export const Navbar: React.FC = () => {
     <nav
       className={`navbar fixed-top ${isScrolled ? "bg-dark" : "bg-transparent"}`}
       data-bs-theme="dark"
-      style={{ opacity: '0.9' }}
+      style={{ opacity: '0.97' }}
     >
       <div className="container-fluid mx-3">
         <Offcanvas></Offcanvas>
@@ -100,7 +100,7 @@ export const Navbar: React.FC = () => {
         <a
           className="nav-link rounded-pill p-2 ms-2"
           onClick={() => setShowModal(true)}
-          style={{ color: "white" }}
+          style={{ color: "white", cursor: "pointer"}}
         >
           {isLoggedIn ? "Logout" : "Login"}
         </a>
@@ -122,9 +122,9 @@ export const Navbar: React.FC = () => {
             <i className="bi bi-three-dots-vertical text-light hover-icon-secondary"></i>
           </a>
           <ul className="dropdown-menu dropdown-menu-end">
-            <li><a className="dropdown-item" href="#">Sign in</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
+            <li><a className="dropdown-item" href="/signin">Sign in</a></li>
+            <li><a className="dropdown-item" href="/error">error</a></li>
+            <li><a className="dropdown-item" href="/notfound">not found page</a></li>
             <li><hr className="dropdown-divider" /></li>
             <li><a className="dropdown-item" href="#">Separated link</a></li>
             <li><hr className="dropdown-divider" /></li>

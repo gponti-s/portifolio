@@ -3,7 +3,7 @@ import React from "react";
 export const AboutPage: React.FC = () => {
   return (
     <div className="container">
-      <div className="mx-5 section section-black section-grid">
+      <div className="mx-5 section section-black section-grid glass-effect">
         <div>
           <h1 className="section-title">About Us</h1>
           <img
@@ -37,7 +37,7 @@ export const AboutPage: React.FC = () => {
           </p>
         </div>
       </div>
-      <div className="section section-gray mx-5">
+      <div className="section section-gray mx-5 glass-effect">
         <h2 className="section-title">Our Mission</h2>
         <p>
           TLorem Ipsum is simply dummy text of the printing and typesetting
@@ -74,7 +74,7 @@ export const AboutPage: React.FC = () => {
         </p>
       </div>
       <div className="section-grid mx-5">
-        <div className="section section-black">
+        <div className="section section-black glass-effect">
           <h2 className="section-title">Contact Us</h2>
           <p>
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem
@@ -93,7 +93,7 @@ export const AboutPage: React.FC = () => {
             pariatur?"
           </p>
         </div>
-        <div className="section section-gray">
+        <div className="section section-gray glass-effect">
           <h2 className="section-title">Title</h2>
           <p>
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem

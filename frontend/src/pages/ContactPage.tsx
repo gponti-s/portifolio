@@ -22,7 +22,7 @@ export const ContactPage: React.FC = () => {
       <div className="container">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-5 section section-gray row g-3 needs-validation"
+          className="mx-5 section section-gray glass-effect row g-3 needs-validation"
           data-bs-theme="dark"
         >
           <div className="col-md-4">

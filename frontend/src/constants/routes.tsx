@@ -5,6 +5,7 @@ import { ProjectPage } from "../pages/ProjectPage"
 import { ContactPage } from "../pages/ContactPage"
 import { ReadingPage } from "../pages/ReadingPage"
 import { NotFoundPage } from "../pages/NotFoundPage"
+import { SignInPage } from "../pages/SignInPage"
 
 
 export const ALL_ROUTES: RouteType[] = [
@@ -42,6 +43,13 @@ export const ALL_ROUTES: RouteType[] = [
         path: "/reading", 
         element: <ReadingPage />,
         offcanvas: true
+    },
+    {
+        group: RouteGroups.PRIVATE,
+        name: "SignIn",
+        path: "/signin",
+        element: <SignInPage />,
+        offcanvas: false,
     },
     {
         group: RouteGroups.PRIVATE,

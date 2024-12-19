@@ -9,7 +9,7 @@ export const Scrollspy: React.FC = () => {
         style={{ margin: "0", gap: "40px" }}
       >
         <div
-          className="col-3 section section-black sticky-top"
+          className="col-3 section section-black glass-effect sticky-top"
           style={{
             overflowY: "auto",
             height: "calc(100vh - 120px)",
@@ -62,7 +62,7 @@ export const Scrollspy: React.FC = () => {
         </div>
 
         <div
-          className="col-8 section section-gray"
+          className="col-8 section section-gray glass-effect"
           style={{ overflowY: "auto" }}
         >
           <div

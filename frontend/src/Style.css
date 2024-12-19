@@ -7,7 +7,14 @@ html, body{
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #1a1d29eb; 
+  background-color: #1a1d29eb;
+}
+
+.background-image {
+  background-image: url(https://img.freepik.com/premium-photo/abstract-flowing-liquid-glass-waves-black-background-smooth-texture-blue-orange-asymmetrical_1336356-55755.jpg?w=900);
+  background-size: cover; 
+  background-position: center; 
+  background-attachment: fixed; 
 }
 
 .viewport-container {
@@ -35,7 +42,7 @@ html, body{
 }
 
 .section-black {
-  background-color: rgb(19, 19, 19);
+  background-color: rgba(19, 19, 19, 0.6);
 }
 
 .section-gray {
@@ -53,6 +60,11 @@ html, body{
   padding: 20px;
   color: whitesmoke;
   background-color: black;
+}
+
+.card-black-small {
+  background-color: rgba(0, 0, 0, 0.459);
+  width: 18rem;
 }
 
 .nav-link:hover{
@@ -73,6 +85,13 @@ html, body{
 	);
   color:transparent;
   background-clip: text;
+}
+
+.glass-effect {
+  backdrop-filter: blur(50px); 
+  box-shadow: 0 0 2px 0 ;
+  border-radius: 10px; 
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 576px) {
