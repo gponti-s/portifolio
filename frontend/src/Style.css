@@ -11,7 +11,7 @@ html, body{
 }
 
 .background-image {
-  background-image: url(https://img.freepik.com/premium-photo/abstract-flowing-liquid-glass-waves-black-background-smooth-texture-blue-orange-asymmetrical_1336356-55755.jpg?w=900);
+  background-image: url('/public/background-image.jpg');
   background-size: cover; 
   background-position: center; 
   background-attachment: fixed; 

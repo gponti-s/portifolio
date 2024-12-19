@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
               
             }}
           >
-            <i className="bi bi-three-dots-vertical text-light hover-icon-secondary"></i>
+            <i className="bi bi-three-dots-vertical text-light "></i>
           </a>
           <ul className="dropdown-menu dropdown-menu-end">
             <li><a className="dropdown-item" href="/signin">Sign in</a></li>
@@ -129,7 +129,7 @@ export const Navbar: React.FC = () => {
             <li><a className="dropdown-item" href="#">Separated link</a></li>
             <li><hr className="dropdown-divider" /></li>
             <li>
-              <div className="dropdown-item form-check form-switch d-flex  ">
+              <div className=" dropdown-item form-check form-switch d-flex" >
                 <span className="me-2 text-body-dark">
                   {isWalletConnectedSwitch ? "Wallet Connected" : "Connect Wallet"}
                 </span>

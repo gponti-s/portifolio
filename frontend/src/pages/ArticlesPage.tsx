@@ -44,7 +44,7 @@ export const ArticlesPage: React.FC = () => {
   return (
     <>
       <div className="container">
-        <div className="mx-5 section section-black glass-effect">
+        <div className="section section-black glass-effect">
           <h3 className="section-title">Articles</h3>
           <p>In this page you going to find all articles</p>
         </div>
