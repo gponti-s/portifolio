@@ -1,5 +1,7 @@
 html, body{
   min-height: 100%;
+  margin: 0;
+  padding: 0;
   background-color: #1a1d29eb; 
 }
 
@@ -8,6 +10,8 @@ html, body{
   flex-direction: column;
   min-height: 100vh;
   background-color: #1a1d29eb;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .background-image {
@@ -96,7 +100,7 @@ html, body{
 
 @media (max-width: 768px) {
   .viewport-container {
-    padding: 40px 15px 0;
+    padding: 70px 1px 0;
   }
 
   .section {
