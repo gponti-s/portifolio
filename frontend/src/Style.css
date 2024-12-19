@@ -94,9 +94,48 @@ html, body{
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+@media (max-width: 768px) {
+  .viewport-container {
+    padding: 40px 15px 0;
+  }
+
+  .section {
+    padding: 30px;
+    margin-bottom: 30px;
+  }
+
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-black-small {
+    width: 100%;
+  }
+
+  .footer {
+    padding: 15px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+  }
+
+  .font-gold {
+    font-size: 1.2rem;
+  }
+}
+
 @media (max-width: 576px) {
   #appTitle {
     display: none;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .nav-link {
+    font-size: 12px;
   }
 }
 
