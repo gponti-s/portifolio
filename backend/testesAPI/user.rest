@@ -12,7 +12,7 @@ GET http://localhost:5000/api/user/email/john.doe@example.com
 GET http://localhost:5000/api/user/username/johndoe
 
 ###
-POST http://localhost:3001/api/user/login
+POST https://api-kohl-nu.vercel.app/
 Content-Type: application/json
 
 {
