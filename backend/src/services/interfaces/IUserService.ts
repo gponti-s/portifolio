@@ -1,7 +1,7 @@
-import IUserModel from "services/interfaces/models/IUserModel";
+import IUserModel from "../../services/interfaces/models/IUserModel";
 import IUserDTO from "./dto/IUserDTO";
 import IUserAdminDTO from "./dto/IUserAdminDTO";
-import IUserEntity from "repositories/interfaces/entities/IUserEntity";
+import IUserEntity from "../../repositories/interfaces/entities/IUserEntity";
 
 interface IUserService {
     findAllUsers(user: IUserModel): Promise<IUserAdminDTO[]>;

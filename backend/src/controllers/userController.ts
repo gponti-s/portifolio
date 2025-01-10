@@ -1,10 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
-import UserRepository from "../repositories/userRepository";
-import { UserService } from "../services/userService";
+import UserRepository from "../repositories/userRepository.js";
+import { UserService } from "../services/userService.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import IUserModel from "services/interfaces/models/IUserModel";
-import { verifyToken} from "../utils/authentication/token"
-import Mapper from "../utils/mappers";
+import IUserModel from "../services/interfaces/models/IUserModel.js";
+import { verifyToken } from "../utils/authentication/token.js";
+import Mapper from "../utils/mappers.js";
 
 const router = Router();
 const userService = new UserService(new UserRepository());
@@ -30,6 +30,7 @@ router.get("/:id", verifyToken, asyncHandler(async (req: Request, res: Response,
 
 router.post("/register", asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log(req.body)
         const newUser: IUserModel = {
             reqBody: req.body
         };
@@ -42,8 +43,8 @@ router.post("/register", asyncHandler(async (req: Request, res: Response, next: 
 
 router.post("/login", async (req: Request, res: Response, next: NextFunction) => {
     try{
-        const { username, password } = req.body;
-        const login = await userService.userLogin(username, password);
+        const { email, password } = req.body;
+        const login = await userService.userLogin(email, password);
         res.status(200).json(login)
     } catch (error) {
         next(error)

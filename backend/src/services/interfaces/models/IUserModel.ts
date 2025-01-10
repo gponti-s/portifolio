@@ -1,24 +1,24 @@
 export interface IUserModel {
     userLogged?: {
         id: string;
-        name: string;
-        username: string;
+        firstName: string;
+        lastName: string;
         email: string;
         gender: string;
         country: string;
         birthDate: Date;
         password: string;
-        permissions: Array<'red' | 'write' | 'admin'>;
+        permissions: Array<'read' | 'write' | 'admin'>;
     };
     reqBody: {
-        name: string;
-        username: string;
+        firstName: string;
+        lastName: string;
         email: string;
         gender: string;
         country: string;
         birthDate: Date;
         password: string;
-        permissions: Array<'red' | 'write' | 'admin'>;
+        permissions: Array<'read' | 'write' | 'admin'>;
     }
 }
 

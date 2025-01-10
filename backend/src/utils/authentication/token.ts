@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import IUserDTO from 'services/interfaces/dto/IUserDTO';
+import IUserDTO from '../../services/interfaces/dto/IUserDTO';
 import { HttpException, ErrorType } from '../error/errorType';
 
 interface CustomRequest extends Request {

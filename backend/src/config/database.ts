@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import UserRepository from '../repositories/userRepository';
-import UserService from '../services/userService';
-import {IUserModel} from 'services/interfaces/models/IUserModel';
+import { UserService } from '../services/userService';
+import { IUserModel } from '../services/interfaces/models/IUserModel';
 import { AppError } from '../utils/error/appError';
 
 dotenv.config();
@@ -20,13 +20,12 @@ async function initializeDatabase() {
         await mongoose.connect(mongoURI);
         console.log('\u001b[32m\u2714 Connected to MongoDB\u001b[0m');
 
-        const adminUsername = process.env.ADMIN_USERNAME as string;
         const adminPassword = process.env.ADMIN_PASSWORD as string;
         const adminEmail = process.env.ADMIN_EMAIL as string;
 
         if (mongoose.connection.readyState === 1) {
-            if (adminUsername && adminEmail && adminPassword) {
-                const existingAdmin = await userService.findUserByUsername(adminUsername).catch((error) => {
+            if ( adminEmail && adminPassword) {
+                const existingAdmin = await userService.findUserByEmail(adminEmail).catch((error) => {
                     if (error.statusCode === 404) {
                         console.log("Admin user not found, proceeding to create one...");
                         return null;
@@ -37,20 +36,9 @@ async function initializeDatabase() {
                 
                 if (!existingAdmin) {
                     const user: IUserModel = {
-                        userLogged: {
-                            id: '',
-                            name: 'Admin',
-                            username: adminUsername,
-                            email: adminEmail,
-                            gender: '',
-                            country: '',
-                            birthDate: new Date(),
-                            password: adminPassword,
-                            permissions: ["admin"]
-                        },
                         reqBody: {
-                            name: 'Admin',
-                            username: adminUsername,
+                            firstName: 'Admin',
+                            lastName: 'admin',
                             email: adminEmail,
                             gender: 'male',
                             country: 'ITA',

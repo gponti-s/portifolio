@@ -1,6 +1,6 @@
 import IUserModel from "../services/interfaces/models/IUserModel";
 import IUserDTO from "../services/interfaces/dto/IUserDTO";
-import IUserAdminDTO from "services/interfaces/dto/IUserAdminDTO";
+import IUserAdminDTO from "../services/interfaces/dto/IUserAdminDTO";
 import IUserEntity from "../repositories/interfaces/entities/IUserEntity";
 
 export class Mapper {
@@ -8,8 +8,8 @@ export class Mapper {
         return {
             userLogged: {
                 id: req.userLogged.id,
-                name: req.userLogged.name,
-                username: req.userLogged.username,
+                firstName: req.userLogged.firstName,
+                lastName: req.userLogged.lastName,
                 email: req.userLogged.email,
                 gender: req.userLogged.gender,
                 country: req.userLogged.gender,
@@ -17,8 +17,8 @@ export class Mapper {
                 permissions: req.userLogged.permissions,
             },
             reqBody: {
-                name: req.body.name,
-                username: req.body.username,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 email: req.body.email,
                 gender: req.body.gender,
                 country: req.body.country,
@@ -31,22 +31,22 @@ export class Mapper {
 
     static async toUserEntity(input: IUserModel): Promise<IUserEntity> {
         return {
-            name: input.reqBody.name,
-            username: input.reqBody.username,
+            firstName: input.reqBody.firstName,
+            lastName: input.reqBody.lastName,
             email: input.reqBody.email,
             country: input.reqBody.country,
             gender: input.reqBody.gender,
             birthDate: input.reqBody.birthDate,
             password: input.reqBody.password,
-            permissions: input.reqBody.permissions,
+            permissions: input.reqBody.permissions
         } as IUserEntity;
     }
 
     static async toUserDTO(user: IUserEntity): Promise<IUserDTO> {
         return {
             id: user.id,
-            name: user.name,
-            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             country: user.country,
             gender: user.gender,
@@ -56,15 +56,15 @@ export class Mapper {
             // updatedAt: user.updatedAt,
             // lastLogin: user.lastLogin,
             // status: user.status,
-            permissions: user.permissions,
+            permissions: user.permissions
         } as IUserDTO;
     }
 
     static async toUserAdminDTO(user: IUserEntity): Promise<IUserAdminDTO> {
         return {
             id: user.id,
-            name: user.name,
-            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             country: user.country,
             gender: user.gender,

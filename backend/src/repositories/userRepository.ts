@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import userSchema from "./schema/userSchema";
 import IUserRepository from "./interfaces/IUserRepository";
-import IUserEntity from "repositories/interfaces/entities/IUserEntity";
+import IUserEntity from "./interfaces/entities/IUserEntity";
 
 const UserModel = mongoose.model<IUserEntity>("User", userSchema);
 

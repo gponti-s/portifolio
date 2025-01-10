@@ -19,12 +19,9 @@ export class UserService implements IUserService {
             throw HttpException(ErrorType.BAD_REQUEST, "Invalid user id");
         }
     }
-    async validateUserExists(username: string, email?: string): Promise<void> {
+    async validateUserExists(email?: string): Promise<void> {
         if (email && await this.userRepository.findUserByEmail(email)) {
             throw HttpException(ErrorType.CONFLICT, "User with this email already exists");
-        }
-        if (await this.userRepository.findUserByUsername(username)) {
-            throw HttpException(ErrorType.CONFLICT, "User with this username already exists");
         }
     }
     
@@ -58,18 +55,29 @@ export class UserService implements IUserService {
     }
 
     async createUser(user: IUserModel): Promise<IUserDTO> {
-        await this.validateUserExists(user.reqBody.username, user.reqBody.email);
+        await this.validateUserExists(user.reqBody.email);
         try {
-            user.reqBody.password = await hashPassword(user.reqBody.password)
+            if (!user.reqBody.permissions || user.reqBody.permissions.length === 0) {
+                user.reqBody.permissions = ['read'];
+            }
+            
+            user.reqBody.password = await hashPassword(user.reqBody.password);
             const userEntity = await Mapper.toUserEntity(user);
+            console.log(userEntity)
             const createdUser = await this.userRepository.createUser(userEntity);
+            
             if (!createdUser) {
                 throw HttpException(ErrorType.INTERNAL_SERVER, "Failed to create user");
             }
             const response = await Mapper.toUserDTO(createdUser);
             return response;
         } catch (error: any) {
-            throw HttpException(ErrorType.BAD_REQUEST, "Failed to create user");
+            // Improved error handling
+            const message = error.message || "Failed to create user";
+            throw HttpException(
+                error.type || ErrorType.BAD_REQUEST,
+                message
+            );
         }
     }
 
@@ -83,8 +91,8 @@ export class UserService implements IUserService {
             throw HttpException(ErrorType.UNAUTHORIZED, "id incorrect or Permissions invalid");
         }
 
-        if (user.userLogged.username !== user.reqBody.username) {
-            await this.validateUserExists(user.reqBody.username, user.reqBody.email !== user.userLogged.email ? user.reqBody.email : undefined);
+        if (user.userLogged.lastName !== user.reqBody.lastName) {
+            await this.validateUserExists(user.reqBody.email !== user.userLogged.email ? user.reqBody.email : undefined);
         }
 
         if (user.reqBody.password) {
@@ -172,8 +180,8 @@ export class UserService implements IUserService {
         return response;
     }
 
-    async userLogin(username: string, password: string): Promise<{token: string; userDTO: IUserDTO} | undefined> {
-        const user = await this.userRepository.findUserByUsername(username);
+    async userLogin(email: string, password: string): Promise<{token: string; userDTO: IUserDTO} | undefined> {
+        const user = await this.userRepository.findUserByEmail(email);
         if (user && await verifyPassword(password, user.password)){
             const userDTO = await Mapper.toUserDTO(user);
             const token = await generateToken(userDTO);

@@ -1,4 +1,4 @@
-import IUserEntity from "repositories/interfaces/entities/IUserEntity";
+import IUserEntity from "./entities/IUserEntity";
 
 interface IUserRepository {
     findAllUsers(): Promise<IUserEntity[] | null>;

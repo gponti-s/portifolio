@@ -1,7 +1,7 @@
 interface IUserAdminDTO extends Document {
     id: string;
-    name: string;
-    username: string;
+    firstName: string;
+    lastName: string;
     email: string;
     gender: string;
     country: string;
@@ -11,7 +11,7 @@ interface IUserAdminDTO extends Document {
     updatedAt: Date;
     lastLogin: Date;
     status: string;
-    permissions: Array<'red' | 'write' | 'admin'>;
+    permissions: Array<'read' | 'write' | 'admin'>;
 };
 
 export default IUserAdminDTO;

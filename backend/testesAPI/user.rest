@@ -1,9 +1,10 @@
-GET http://localhost:5000/api/user/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDUwZGQzM2RiMzkwOTNhNzE5Zjk3ZCIsIm5hbWUiOiJBZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LTEwLTA4VDEwOjQ3OjQ3LjUxNFoiLCJwZXJtaXNzaW9ucyI6WyJhZG1pbiJdLCJpYXQiOjE3Mjg0MDgwMTIsImV4cCI6MTcyODQxMTYxMn0.kJQCajFDMOdsWb3TTqiSid0MCQILcVdfkFe9NCk6wV4
+GET http://localhost:3001/api/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODA1ZWFjMDRkYmQ4NTRlOGIzOWVhYSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJjb3VudHJ5IjoiSVRBIiwiZ2VuZGVyIjoibWFsZSIsImJpcnRoRGF0ZSI6IjIwMjUtMDEtMDlUMjM6NDE6MzIuNDMxWiIsInBlcm1pc3Npb25zIjpbImFkbWluIl0sImlhdCI6MTczNjQ2NjIyMCwiZXhwIjoxNzM2NDY5ODIwfQ.nWVErUq8ILllVBW8GLvnnmIDLtsJWpYxoYNSS7odukA
 
 ###
-GET http://localhost:5000/api/user/66facd5f967fe5ba32daf584
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDUwZGQzM2RiMzkwOTNhNzE5Zjk3ZCIsIm5hbWUiOiJBZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LTEwLTA4VDEwOjQ3OjQ3LjUxNFoiLCJwZXJtaXNzaW9ucyI6WyJhZG1pbiJdLCJpYXQiOjE3Mjg0MDcwMTIsImV4cCI6MTcyODQxMDYxMn0.ETr3YlL32_umqzpzyNNKB9tDF0lPQshO2c9YToF_S8Q
+GET http://localhost:3001/api/user/67805757ff2dc044c5945a61
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODA1ZWFjMDRkYmQ4NTRlOGIzOWVhYSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJjb3VudHJ5IjoiSVRBIiwiZ2VuZGVyIjoibWFsZSIsImJpcnRoRGF0ZSI6IjIwMjUtMDEtMDlUMjM6NDE6MzIuNDMxWiIsInBlcm1pc3Npb25zIjpbImFkbWluIl0sImlhdCI6MTczNjQ2NjIyMCwiZXhwIjoxNzM2NDY5ODIwfQ.nWVErUq8ILllVBW8GLvnnmIDLtsJWpYxoYNSS7odukA
+
 ###
 GET http://localhost:5000/api/user/email/john.doe@example.com
 
@@ -11,21 +12,21 @@ GET http://localhost:5000/api/user/email/john.doe@example.com
 GET http://localhost:5000/api/user/username/johndoe
 
 ###
-POST http://localhost:5000/api/user/login
+POST http://localhost:3001/api/user/login
 Content-Type: application/json
 
 {
-    "username": "admin",
-    "password": "admin123"
+    "email": "admin@example.com",
+    "password": "admin_password" 
 }
 
 ###
-POST http://localhost:5000/api/user/register
+POST http://localhost:3001/api/user/register
 Content-Type: application/json
 
 {
-    "name": "Tereza",
-    "username": "tereza",
+    "firstName": "Tereza",
+    "lastName": "Silva",
     "email": "tete@example.com",
     "gender": "female",
     "country": "ITA",
@@ -50,6 +51,6 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5000/api/user/delete/67050dd33db39093a719f97d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDUwZGQzM2RiMzkwOTNhNzE5Zjk3ZCIsIm5hbWUiOiJBZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiY291bnRyeSI6IklUQSIsImdlbmRlciI6Im1hbGUiLCJiaXJ0aERhdGUiOiIyMDI0LTEwLTA4VDEwOjQ3OjQ3LjUxNFoiLCJwZXJtaXNzaW9ucyI6WyJhZG1pbiJdLCJpYXQiOjE3MjgzOTUyODcsImV4cCI6MTcyODM5ODg4N30.8lmzfxlnWpbpz_e9tE8LimKkyKDHSEjbV1_KRc4g6nY
+DELETE http://localhost:3001/api/user/delete/67805757ff2dc044c5945a61
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ODA1ZWFjMDRkYmQ4NTRlOGIzOWVhYSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJjb3VudHJ5IjoiSVRBIiwiZ2VuZGVyIjoibWFsZSIsImJpcnRoRGF0ZSI6IjIwMjUtMDEtMDlUMjM6NDE6MzIuNDMxWiIsInBlcm1pc3Npb25zIjpbImFkbWluIl0sImlhdCI6MTczNjQ2NjIyMCwiZXhwIjoxNzM2NDY5ODIwfQ.nWVErUq8ILllVBW8GLvnnmIDLtsJWpYxoYNSS7odukA
 

@@ -1,19 +1,12 @@
-
-interface IUserDTO extends Document {
+interface IUserDTO {
     id: string;
-    name: string;
-    username: string;
+    firstName: string;
+    lastName: string;
     email: string;
-    gender: string;
     country: string;
+    gender: string;
     birthDate: Date;
-    //password: string;
-    // createdAt: Date;
-    // updatedAt: Date;
-    // lastLogin: Date;
-    // status: string;
-    permissions: Array<'red' | 'write' | 'admin'>;
-
+    permissions: string[];
 }
 
 export default IUserDTO;
