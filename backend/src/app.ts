@@ -29,6 +29,8 @@ app.use(rateLimit({
   max: 100
 }));
 
+app.options('*', cors(corsOptions)); // Enable pre-flight for all routes
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI as string)
   .then(() => console.log('Connected to MongoDB'))
@@ -42,6 +44,15 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userController);
+
+// Add error handling
+app.use((err: any, req: any, res: any, next: any) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    message: 'Something broke!',
+    error: process.env.NODE_ENV === 'production' ? {} : err
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
