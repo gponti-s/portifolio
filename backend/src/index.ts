@@ -16,8 +16,8 @@ app.use(express.json());
 
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://portifolio-rose-nu.vercel.app/']
-    : ['http://localhost:3000'],
+    ? 'https://portifolio-rose-nu.vercel.app'
+    : 'http://localhost:3000',
   credentials: true
 };
 
@@ -32,9 +32,6 @@ initializeDatabase();
 
 // Add security headers
 app.use(helmet());
-
-// enable JSON body parse
-app.use(express.json());
 
 // Rate limiting
 const limiter = rateLimit({
