@@ -20,9 +20,5 @@
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "ignorePatterns": [
-    "frontend/**",
-    "node_modules/**"
-  ]
+  }
 }
