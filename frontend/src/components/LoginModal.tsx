@@ -7,12 +7,13 @@ export const LoginModal: React.FC<{
   showModal: boolean;
   setShowModal: (show: boolean) => void;
   handleLogin: () => void;
-  username: string;
-  setUsername: (username: string) => void;
+  email: string;
+  setEmail: (email: string) => void;
   password: string;
   setPassword: (password: string) => void;
-}> = ({ showModal, setShowModal, handleLogin, username, setUsername, password, setPassword }) => {  
+}> = ({ showModal, setShowModal, handleLogin, email, setEmail, password, setPassword }) => {  
     const [isPasswordVisible, setIsPasswordVisible] = React.useState<boolean>(false);
+
 
     return (
         <Modal className="section-black" data-bs-theme="dark" style={{ color: "white" }} show={showModal} onHide={() => setShowModal(false)}>
@@ -25,8 +26,8 @@ export const LoginModal: React.FC<{
                             className="form-control"
                             id="email"
                             placeholder='Email'
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>

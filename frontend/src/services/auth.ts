@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const apiBaseURL = process.env.REACT_APP_URL_API_BASE;
+const apiBaseURL = process.env.REACT_APP_API_URL || 'https://apiportifolio-production-97d4.up.railway.app/api';
 
-export async function loginUser(username: string, password: string){
+export async function loginUser(email: string, password: string){
     try {
+        console.log(email)
         const response = await axios.post(`${apiBaseURL}/user/login`, { 
-            "username": username,
+            "email": email,
             "password": password 
         });
 

@@ -12,7 +12,7 @@ GET http://localhost:5000/api/user/email/john.doe@example.com
 GET http://localhost:5000/api/user/username/johndoe
 
 ### Test production API
-POST https://api-kohl-nu.vercel.app/api/user/login
+POST apiportifolio-production-97d4.up.railway.app/api/user/login
 Content-Type: application/json
 
 {

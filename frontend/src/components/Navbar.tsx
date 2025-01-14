@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
   const [isWalletConnectedSwitch, setWalletConnectedSwitch] = useState(false);
   const { isLoggedIn, setIsLoggedIn, appTitle, appSubTitle } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
 
   
   async function handleLogin() {
-    const response = await loginUser(username, password);
+    const response = await loginUser(email, password);
     if (response) {
       setIsLoggedIn(true);
       setShowModal(false);
@@ -151,8 +151,8 @@ export const Navbar: React.FC = () => {
         showModal={showModal}
         setShowModal={setShowModal}
         handleLogin={handleLogin}
-        username={username}
-        setUsername={setUsername}
+        email={email}
+        setEmail={setEmail}
         password={password}
         setPassword={setPassword}
       />
