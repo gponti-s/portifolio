@@ -12,7 +12,7 @@ export class Mapper {
                 lastName: req.userLogged.lastName,
                 email: req.userLogged.email,
                 gender: req.userLogged.gender,
-                country: req.userLogged.gender,
+                country: req.userLogged.country,
                 birthDate: req.userLogged.birthDate,
                 permissions: req.userLogged.permissions,
             },

@@ -64,9 +64,14 @@ router.put("/update/:id", verifyToken, asyncHandler(async (req: Request, res: Re
 router.delete("/delete/:id", verifyToken, asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await Mapper.toUserModel(req);
+        console.log('Attempting to delete user:', {
+            targetId: req.params.id,
+            loggedUser: user.userLogged
+        });
         const deletedUser = await userService.deleteUser(req.params.id, user);
         res.status(200).json(deletedUser);
     } catch (error) {
+        console.error('Delete user error:', error);
         next(error);
     }
 }));

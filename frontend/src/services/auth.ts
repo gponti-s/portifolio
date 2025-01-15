@@ -35,11 +35,15 @@ interface SignInFormData {
     birthDate: Date;
     password: string;
     confirmPassword: string;
-
 }
 
-export async function signIn(data: SignInFormData){
-    console.log("data", data)
+interface SignInResult {
+    success: boolean;
+    message?: string;
+}
+
+export async function signIn(data: SignInFormData): Promise<SignInResult> {
+    console.log("data", data);
     try {
         const response = await axios.post(`${apiBaseURL}/user/register`, {
             firstName: data.firstName,
@@ -49,18 +53,23 @@ export async function signIn(data: SignInFormData){
             country: data.country,
             birthDate: data.birthDate,
             password: data.password,
+            permissions: []
         });
 
-        if (response.status != 200) {
-            throw new Error("Register Failed");
-        } else {
-            return true;
+        return {
+            success: true,
+            message: "Registration successful"
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return {
+                success: false,
+                message: error.response?.data?.message || "Registration failed"
+            };
         }
-
-
-    } catch(error){
-        console.error("Register Error", error)
-        return false;
+        return {
+            success: false,
+            message: "An unexpected error occurred"
+        };
     }
-
 }

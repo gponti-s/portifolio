@@ -31,12 +31,14 @@ export const SignInPage: React.FC = () => {
     const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
 
     const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        const response = await signIn(data);
-        if (response === false) {
-            alert("Register Failed");
+        const result = await signIn(data);
+        if (!result.success) {
+            //alert(result.message);
+            return <ErrorPage message={result.message || "signIn error"}/>
+        } else {
+            alert("You are register!!")
+            reset();
         }
-        reset();
     }
 
     useEffect(() => {

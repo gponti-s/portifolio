@@ -116,20 +116,39 @@ export class UserService implements IUserService {
     }
 
     async deleteUser(id: string, user: IUserModel): Promise<IUserDTO> {
-        if (!user.userLogged || !await verifyPermission(user.userLogged.permissions, "admin")){
-            throw HttpException(ErrorType.FORBIDDEN, '"Access denied"')
+        try {
+            // Check if user is logged in and has admin permissions
+            if (!user.userLogged) {
+                throw HttpException(ErrorType.UNAUTHORIZED, "User not logged in");
+            }
+            
+            if (!await verifyPermission(user.userLogged.permissions, "admin")){
+                throw HttpException(ErrorType.FORBIDDEN, "Access denied - Admin permission required");
+            }
+
+            // Validate the ID format
+            await this.validateObjectId(id);
+
+            // Check if trying to delete admin
+            const admin = await this.findUserByEmail('admin@example.com');
+            if (id === admin.id){
+                throw HttpException(ErrorType.FORBIDDEN, "Admin user cannot be deleted");
+            }
+
+            // Try to delete the user
+            const deletedUser = await this.userRepository.deleteUser(id);
+            if (!deletedUser) {
+                throw HttpException(ErrorType.NOT_FOUND, "User not found");
+            }
+
+            return await Mapper.toUserDTO(deletedUser);
+        } catch (error: any) {
+            console.error('Delete user service error:', error);
+            throw HttpException(
+                error.type || ErrorType.BAD_REQUEST,
+                error.message || "Failed to delete user"
+            );
         }
-        const admin = await this.findUserByUsername('admin');
-        if (id === admin.id){
-            throw HttpException(ErrorType.FORBIDDEN, `admin can not be deleted`);
-        }
-        await this.validateObjectId(id);
-        const deletedUser = await this.userRepository.deleteUser(id);
-        if (!deletedUser) {
-            throw HttpException(ErrorType.NOT_FOUND, "User not found");
-        }
-        const response = await Mapper.toUserDTO(deletedUser);
-        return response;
     }
     
     async findUserByEmail(email: string): Promise<IUserDTO> {
