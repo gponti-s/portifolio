@@ -30,16 +30,19 @@ export const SignInPage: React.FC = () => {
     const [countries, setCountries] = useState<string[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [isTermsAccepted, setIsTermsAccepted] = useState<boolean>(false);
+    const [showError, setShowError] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [message, setMessage] = useState('');
 
     const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
         const result = await signIn(data);
         if (!result.success) {
-            //alert(result.message);
-            return <ErrorPage message={result.message || "signIn error"}/>
+            setMessage(result.message || 'Registration failed');
+            setShowError(true);
         } else {
-            return <SuccessPage message={"You are register"}/>
-            //alert("You are register!!")
-            //reset();
+            setMessage('Registration successful!');
+            setShowSuccess(true);
+            reset();
         }
     }
 
@@ -56,10 +59,14 @@ export const SignInPage: React.FC = () => {
         loadCountries();
     }, []);
 
-    if(error){
-        return <ErrorPage message={error}/>
+    if (showError) {
+        return <ErrorPage message={message} />;
     }
-    
+
+    if (showSuccess) {
+        return <SuccessPage message={message} />;
+    }
+
     return(
         <main className="container">
             <form 
