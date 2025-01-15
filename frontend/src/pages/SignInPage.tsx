@@ -4,6 +4,7 @@ import { fetchCountries } from "../services/countries";
 import ErrorPage from "./ErrorPage";
 import {ButtonShowPassword} from "../components/ButtonShowPassword";
 import { signIn } from "../services/auth";
+import SuccessPage from "./SuccessPage";
 
 
 interface SignInFormData {
@@ -36,8 +37,9 @@ export const SignInPage: React.FC = () => {
             //alert(result.message);
             return <ErrorPage message={result.message || "signIn error"}/>
         } else {
-            alert("You are register!!")
-            reset();
+            return <SuccessPage message={"You are register"}/>
+            //alert("You are register!!")
+            //reset();
         }
     }
 

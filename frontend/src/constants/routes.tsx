@@ -57,7 +57,7 @@ export const ALL_ROUTES: RouteType[] = [
         path: "*",
         element: <NotFoundPage />,
         offcanvas: true
-    }
+    },
 ]
 
 export const ALL_ROUTES_PUBLIC: RouteType[] = ALL_ROUTES.filter((route) => route.group === RouteGroups.PUBLIC)
