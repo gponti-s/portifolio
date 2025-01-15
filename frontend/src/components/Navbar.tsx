@@ -38,7 +38,6 @@ export const Navbar: React.FC = () => {
       setShowModal(false);
       const userLoggedString = localStorage.getItem("userLogged");
       const userLogged = userLoggedString ? JSON.parse(userLoggedString) : null;
-      console.log(userLogged);
     } else {
       alert("Login error");
     }

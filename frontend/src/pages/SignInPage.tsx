@@ -3,19 +3,27 @@ import { useEffect, useState } from "react"
 import { fetchCountries } from "../services/countries";
 import ErrorPage from "./ErrorPage";
 import {ButtonShowPassword} from "../components/ButtonShowPassword";
+import { signIn } from "../services/auth";
 
 
 interface SignInFormData {
     firstName: string;
     lastName: string;
     email: string;
+    gender: string;
+    country: string;
+    birthDate: Date;
     password: string;
     confirmPassword: string;
 
 }
 
 export const SignInPage: React.FC = () => {
-    const { register, handleSubmit, reset, getValues, formState: { errors, isSubmitting}} = useForm<SignInFormData>();
+    const { register, handleSubmit, reset, getValues, formState: { errors, isSubmitting}} = useForm<SignInFormData>({
+        defaultValues: {
+            gender: "notInformed"
+        }
+    });
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState<boolean>(false);
     const [countries, setCountries] = useState<string[]>([]);
@@ -24,7 +32,10 @@ export const SignInPage: React.FC = () => {
 
     const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
         await new Promise((resolve) => setTimeout(resolve, 1000))
-        console.log(data);
+        const response = await signIn(data);
+        if (response === false) {
+            alert("Register Failed");
+        }
         reset();
     }
 
@@ -77,7 +88,13 @@ export const SignInPage: React.FC = () => {
                         @
                     </span>
                     <input
-                        {...register("email", {required: "email is required"})}
+                        {...register("email", {required: "email is required",  pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Invalid email address"
+                        },
+                        validate: {
+                            notEmpty: (value) => value.trim() !== "" || "Email cannot be empty"
+                        }})}
                         type="text"
                         className="form-control"
                         id="validationEmail"
@@ -88,23 +105,61 @@ export const SignInPage: React.FC = () => {
                     </div>
                 </div>
                 <div className="row my-4">
-                    <div className="col-md-7">
+                    <div className="col-md-6">
                         <input 
                         className="form-control"
                         placeholder="Address"
                         type="text" />
                     </div>
                     <div className="col-md-4">
-                        <select className="form-select" id="inputCountry" aria-placeholder="contry">
-                            <option selected>Country</option>
+                        <select className="form-select" id="inputCountry" aria-placeholder="contry"
+                        {...register("country", {required: "Country is required", validate: (value) => value != "" || "Please select a country"})}
+                        >
+                            <option value="">Country</option>
                             {countries.map((country, index) => (
                                 <option key={index} value={country}>{country}</option>
                             ))}
                         </select>
+                        {errors.country && (<p className="text-light">{`${errors.country.message}`}</p>)}
+                    </div>
+                    <div className="col-md-2">
+                        <select 
+                        className="form-select"
+                        {...register("gender")}
+                        >
+                            <option value="notInformed">Gender</option>
+                            <option value="male">Male</option>
+                            <option value="famale">Female</option>
+                            <option value="others">Others</option>
+                        </select>
                     </div>
                 </div>
-                </div>
                 <div className="row my-2">
+                    <div className="col-md-5">
+                        <div className="input-group has-validation">
+                            <span className="input-group-text" id="inputGroupPrepend">
+                                Bith Date
+                            </span>
+                                <input
+                                className="form-control"
+                                type="date"
+                                placeholder="Bith Date"
+                                {...register("birthDate", {
+                                    required: "Birth Date is required",
+                                    validate: (value) => {
+                                        const date = new Date(value);
+                                        const today = new Date();
+                                        return date < today || "Birth date cannot be in the future";
+                                    }
+                                })}
+                                />
+                                {errors.birthDate && (<p className="text-light">{`${errors.birthDate.message}`}</p>)}
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+                <div className="row my-2 pt-5">
                     <div className="col-md-6">
                         <div className="input-group">
                             <input

@@ -1,5 +1,5 @@
 export async function fetchCountries() {
-    const apiUrl = process.env.REACT_APP_URL_API_COUNTRIES;
+    const apiUrl = process.env.REACT_APP_URL_API_COUNTRIES || "https://restcountries.com/v3.1/all";
     if (!apiUrl) {
         throw new Error("API URL is not defined");
     }
